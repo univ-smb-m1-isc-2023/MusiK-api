@@ -5,5 +5,5 @@ import com.github.enteraname74.musik.domain.model.Music;
 /**
  * DAO for managing Musics.
  */
-interface MusicDao extends Dao<Music> {
+public interface MusicDao extends Dao<Music> {
 }
