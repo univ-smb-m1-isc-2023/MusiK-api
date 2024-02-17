@@ -28,7 +28,7 @@ public class PostgresMusicRepositoryImpl implements MusicRepository {
     }
 
     @Override
-    public Optional<Music> getFromId(String id) {
+    public Optional<Music> getById(String id) {
         return musicDao.getById(id);
     }
 

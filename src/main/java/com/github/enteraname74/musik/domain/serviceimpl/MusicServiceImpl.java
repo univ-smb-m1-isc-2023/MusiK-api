@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Service
 public class MusicServiceImpl implements MusicService {
+
     private final MusicRepository musicRepository;
 
     @Autowired
@@ -29,7 +30,7 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public ServiceResult<?> getFromId(String id) {
+    public ServiceResult<?> getById(String id) {
         if (!musicRepository.doesElementExists(id)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
@@ -39,7 +40,7 @@ public class MusicServiceImpl implements MusicService {
 
         return new ServiceResult<>(
                 HttpStatus.OK,
-                musicRepository.getFromId(id)
+                musicRepository.getById(id)
         );
     }
 
@@ -60,7 +61,7 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public ServiceResult<?> delete(String id) {
+    public ServiceResult<?> deleteById(String id) {
         if (!musicRepository.doesElementExists(id)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
@@ -69,7 +70,7 @@ public class MusicServiceImpl implements MusicService {
         }
         musicRepository.deleteById(id);
         return new ServiceResult<>(
-                HttpStatus.ACCEPTED,
+                HttpStatus.OK,
                 ControllerMessages.MUSIC_DELETED
         );
     }

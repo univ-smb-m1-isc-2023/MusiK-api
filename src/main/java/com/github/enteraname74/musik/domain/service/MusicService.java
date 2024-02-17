@@ -25,7 +25,7 @@ public interface MusicService {
      * @param id the id of the Music to retrieve.
      * @return a ServiceResult, holding the found Music or an error.
      */
-    ServiceResult<?> getFromId(String id);
+    ServiceResult<?> getById(String id);
 
     /**
      * Save a new Music.
@@ -41,5 +41,5 @@ public interface MusicService {
      * @param id the id of the Music to delete.
      * @return a ServiceResult, holding the response of the request or an error.
      */
-    ServiceResult<?> delete(String id);
+    ServiceResult<?> deleteById(String id);
 }

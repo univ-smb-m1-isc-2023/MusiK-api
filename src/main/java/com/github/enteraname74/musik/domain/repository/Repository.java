@@ -22,7 +22,7 @@ public interface Repository<T> {
      * @param id the id of the element to retrieve.
      * @return an optional element.
      */
-    Optional<T> getFromId(String id);
+    Optional<T> getById(String id);
 
     /**
      * Save a new element.

@@ -43,7 +43,7 @@ public class MusicController {
     ResponseEntity<?> get(
             @PathVariable String id
     ) {
-        ServiceResult<?> result = musicService.getFromId(id);
+        ServiceResult<?> result = musicService.getById(id);
 
         return new ResponseEntity<>(result.getResult(), result.getHttpStatus());
     }
@@ -52,7 +52,7 @@ public class MusicController {
     ResponseEntity<?> delete(
             @PathVariable String id
     ) {
-        ServiceResult<?> result = musicService.delete(id);
+        ServiceResult<?> result = musicService.deleteById(id);
 
         return new ResponseEntity<>(result.getResult(), result.getHttpStatus());
     }
