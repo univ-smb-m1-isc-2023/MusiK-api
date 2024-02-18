@@ -13,9 +13,6 @@ public class Music {
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("path")
-    private String path;
-
     @JsonProperty("name")
     private String name;
 
@@ -25,12 +22,15 @@ public class Music {
     @JsonProperty("album")
     private String album;
 
-    public Music(String id, String path, String name, String artist, String album) {
+    @JsonProperty("albumArtworkUrl")
+    private String albumArtworkUrl;
+
+    public Music(String id, String name, String artist, String album, String albumArtworkUrl) {
         this.id = id;
-        this.path = path;
         this.name = name;
         this.artist = artist;
         this.album = album;
+        this.albumArtworkUrl = albumArtworkUrl;
     }
 
     /**
@@ -52,14 +52,6 @@ public class Music {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getName() {
@@ -84,5 +76,13 @@ public class Music {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public String getAlbumArtworkUrl() {
+        return albumArtworkUrl;
+    }
+
+    public void setAlbumArtworkUrl(String albumArtworkUrl) {
+        this.albumArtworkUrl = albumArtworkUrl;
     }
 }

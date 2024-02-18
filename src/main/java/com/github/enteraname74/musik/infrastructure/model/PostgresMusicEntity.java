@@ -17,9 +17,6 @@ public class PostgresMusicEntity {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "path", nullable = false)
-    private String path;
-
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -29,12 +26,15 @@ public class PostgresMusicEntity {
     @Column(name = "album", nullable = false)
     private String album;
 
-    public PostgresMusicEntity(String id, String path, String name, String artist, String album) {
+    @Column(name = "albumArtworkUrl", nullable = false)
+    private String albumArtworkUrl;
+
+    public PostgresMusicEntity(String id, String name, String artist, String album, String albumArtworkUrl) {
         this.id = id;
-        this.path = path;
         this.name = name;
         this.artist = artist;
         this.album = album;
+        this.albumArtworkUrl = albumArtworkUrl;
     }
 
     public PostgresMusicEntity() {
@@ -53,14 +53,6 @@ public class PostgresMusicEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getName() {
@@ -87,6 +79,14 @@ public class PostgresMusicEntity {
         this.album = album;
     }
 
+    public String getAlbumArtworkUrl() {
+        return albumArtworkUrl;
+    }
+
+    public void setAlbumArtworkUrl(String albumArtworkUrl) {
+        this.albumArtworkUrl = albumArtworkUrl;
+    }
+
     /**
      * Convert a PostgresMusicEntity to a Music.
      *
@@ -95,10 +95,10 @@ public class PostgresMusicEntity {
     public Music toMusic() {
         return new Music(
                 this.id,
-                this.path,
                 this.name,
                 this.artist,
-                this.album
+                this.album,
+                this.albumArtworkUrl
         );
     }
 
@@ -111,10 +111,10 @@ public class PostgresMusicEntity {
     public static PostgresMusicEntity toPostgresMusicEntity(Music music) {
         return new PostgresMusicEntity(
                 music.getId(),
-                music.getPath(),
                 music.getName(),
                 music.getArtist(),
-                music.getAlbum()
+                music.getAlbum(),
+                music.getAlbumArtworkUrl()
         );
     }
 }

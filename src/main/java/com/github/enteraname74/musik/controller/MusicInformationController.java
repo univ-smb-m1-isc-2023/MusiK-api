@@ -1,7 +1,7 @@
 package com.github.enteraname74.musik.controller;
 
 import com.github.enteraname74.musik.domain.model.Music;
-import com.github.enteraname74.musik.domain.service.MusicService;
+import com.github.enteraname74.musik.domain.service.MusicInformationService;
 import com.github.enteraname74.musik.domain.utils.IdGenerator;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,15 @@ import java.util.List;
  * Controller for managing API calls related to musics.
  */
 @RestController
-@RequestMapping("/music")
-public class MusicController {
-    private final MusicService musicService;
+@RequestMapping("/music/information")
+public class MusicInformationController {
+    private final MusicInformationService musicInformationService;
 
     @Autowired
-    public MusicController(MusicService musicService) {
-        this.musicService = musicService;
+    public MusicInformationController(
+            MusicInformationService musicInformationService
+    ) {
+        this.musicInformationService = musicInformationService;
     }
 
     /**
@@ -30,7 +32,7 @@ public class MusicController {
      */
     @GetMapping("/all")
     List<Music> getAll() {
-        return musicService.getAll();
+        return musicInformationService.getAll();
     }
 
     /**
@@ -43,7 +45,7 @@ public class MusicController {
     ResponseEntity<?> get(
             @PathVariable String id
     ) {
-        ServiceResult<?> result = musicService.getById(id);
+        ServiceResult<?> result = musicInformationService.getById(id);
 
         return new ResponseEntity<>(result.getResult(), result.getHttpStatus());
     }
@@ -52,7 +54,7 @@ public class MusicController {
     ResponseEntity<?> delete(
             @PathVariable String id
     ) {
-        ServiceResult<?> result = musicService.deleteById(id);
+        ServiceResult<?> result = musicInformationService.deleteById(id);
 
         return new ResponseEntity<>(result.getResult(), result.getHttpStatus());
     }
@@ -61,12 +63,11 @@ public class MusicController {
     ResponseEntity<?> saveDummy() {
         Music music = new Music(
                 IdGenerator.generateRandomId(),
-                "",
                 "NAME",
                 "ARTIST",
                 "ALBUM"
         );
-        ServiceResult<?> result = musicService.save(music);
+        ServiceResult<?> result = musicInformationService.save(music);
 
         return new ResponseEntity<>(result.getResult(), result.getHttpStatus());
     }
