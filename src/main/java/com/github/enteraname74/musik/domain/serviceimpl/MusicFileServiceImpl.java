@@ -12,6 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
+/**
+ * Implementation of the MusicFileService.
+ * Music files are saved in a specific folder.
+ */
 @Service
 public class MusicFileServiceImpl implements MusicFileService {
     private final MusicFilePersistenceManager musicFilePersistenceManager;

@@ -88,7 +88,7 @@ public class MusicControllerTest {
 
     @Test
     public void givenMusics_whenGetById_thenRetrieveMusic() throws Exception {
-        mockMvc.perform(get("/music/{id}", "1"))
+        mockMvc.perform(get("/music/information/{id}", "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("MUSICNAME"));
@@ -96,7 +96,7 @@ public class MusicControllerTest {
 
     @Test
     public void givenMusics_whenGetAll_thenShouldGetAllMusics() throws Exception {
-        mockMvc.perform(get("/music/all"))
+        mockMvc.perform(get("/music/information/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
@@ -104,7 +104,7 @@ public class MusicControllerTest {
 
     @Test
     public void givenMusics_whenDeleteById_thenMusicShouldBeDeleted() throws Exception {
-        mockMvc.perform(delete("/music/{id}", "1"))
+        mockMvc.perform(delete("/music/information/{id}", "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(ControllerMessages.MUSIC_DELETED)));

@@ -65,7 +65,8 @@ public class MusicInformationController {
                 IdGenerator.generateRandomId(),
                 "NAME",
                 "ARTIST",
-                "ALBUM"
+                "ALBUM",
+                ""
         );
         ServiceResult<?> result = musicInformationService.save(music);
 

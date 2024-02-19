@@ -1,6 +1,6 @@
 package com.github.enteraname74.musik.domain.handlerimpl.musicfingerprintreaderimpl;
 
-import com.github.enteraname74.musik.domain.handler.MusicFingerprintReader;
+import com.github.enteraname74.musik.domain.handler.MusicRecognitionHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 @Qualifier("Python")
 @Component
-public class PythonMusicFingerprintReaderImpl implements MusicFingerprintReader {
+public class PythonMusicRecognitionHandlerImpl extends MusicRecognitionHandler {
     @Override
     public Optional<String> getFingerPrintFromMusic(String musicPath) {
         try {

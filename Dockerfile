@@ -17,8 +17,8 @@ ENV PYTHONUNBUFFERED=1 \
 # Install the pyacoustid library
 RUN apk add --upgrade py3-pyacoustid
 
-# Copy the musics from the ressources folder to the container
-COPY src/main/resources/musics /app/musics
+# Create a volume for music files
+VOLUME /app/musics
 
 # Copy the python script to the container
 COPY src/main/resources/fingerprint.py /app/fingerprint.py

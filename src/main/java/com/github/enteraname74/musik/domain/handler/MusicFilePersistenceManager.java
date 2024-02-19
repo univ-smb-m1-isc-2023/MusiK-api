@@ -10,11 +10,11 @@ import java.util.Optional;
 public interface MusicFilePersistenceManager {
 
     /**
-     * Tries to save a file and return its name.
-     * The name of the file should be its id.
+     * Tries to save a file and return its id.
+     * The id of the file is its name without its extension.
      *
      * @param file the file to save.
-     * @return the name of the file or nothing if the file was not saved.
+     * @return the id of the file (its name, without its extension) or nothing if the file was not saved.
      */
     Optional<String> saveFile(MultipartFile file);
 }

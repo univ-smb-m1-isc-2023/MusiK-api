@@ -1,6 +1,6 @@
 package com.github.enteraname74.musik.domain.handlerimpl.musicfingerprintreaderimpl;
 
-import com.github.enteraname74.musik.domain.handler.MusicFingerprintReader;
+import com.github.enteraname74.musik.domain.handler.MusicRecognitionHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Qualifier("FpCalc")
 @Component
-public class FpCalcMusicFingerprintReaderImpl implements MusicFingerprintReader {
+public class FpCalcMusicRecognitionHandlerImpl extends MusicRecognitionHandler {
     @Override
     public Optional<String> getFingerPrintFromMusic(String musicPath) {
         try {
@@ -38,22 +38,20 @@ public class FpCalcMusicFingerprintReaderImpl implements MusicFingerprintReader 
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             String line;
+            StringBuilder fingerprint = new StringBuilder();
             System.out.println("Retrieved result is: ");
             while((line = in.readLine()) != null){
+                fingerprint.append(line);
                 System.out.println(line);
             }
             int exitCode = process.waitFor();
             if (exitCode == 0) {
                 // Successfully calculated fingerprint
-                System.out.println("Got fingerprint!");
-            } else {
-                // Handle error
-                System.err.println("Error calculating fingerprint");
+                return Optional.of(fingerprint.toString());
             }
         } catch (Exception exception) {
             System.out.println("EXCEPTION OCCURRED!!");
             System.out.println(exception.getLocalizedMessage());
-            return Optional.empty();
         }
 
         return Optional.empty();

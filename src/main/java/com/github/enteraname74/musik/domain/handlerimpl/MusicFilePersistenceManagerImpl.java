@@ -28,7 +28,7 @@ public class MusicFilePersistenceManagerImpl implements MusicFilePersistenceMana
 
         if (fileExtension.isEmpty() || !FileUtils.isMusicFile(originalFileName)) return Optional.empty();
 
-        String fileName = IdGenerator.generateRandomId()+"."+fileExtension;
+        String fileName = IdGenerator.generateRandomId()+"."+fileExtension.get();
 
         try (InputStream inputStream = file.getInputStream()) {
             Path directory = Path.of(MUSIC_FOLDER);

@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 
 data
+musics
 compose.yaml
 
 ### STS ###
