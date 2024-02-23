@@ -1,4 +1,4 @@
-package com.github.enteraname74.musik.servicetest;
+package com.github.enteraname74.musik.service;
 
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;

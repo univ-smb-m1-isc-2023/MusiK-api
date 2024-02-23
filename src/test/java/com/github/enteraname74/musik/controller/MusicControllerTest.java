@@ -1,6 +1,5 @@
-package com.github.enteraname74.musik.controllertest;
+package com.github.enteraname74.musik.controller;
 
-import com.github.enteraname74.musik.controller.MusicInformationController;
 import com.github.enteraname74.musik.controller.utils.ControllerMessages;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.service.MusicInformationService;
