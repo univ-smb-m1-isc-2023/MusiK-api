@@ -1,8 +1,9 @@
-package com.github.enteraname74.musik.infrastructure.repositoryimpl;
+package com.github.enteraname74.musik.infrastructure.daoimpl;
 
 import com.github.enteraname74.musik.domain.dao.MusicDao;
 import com.github.enteraname74.musik.domain.model.Music;
-import com.github.enteraname74.musik.domain.repository.MusicRepository;
+import com.github.enteraname74.musik.infrastructure.jpa.PostgresMusicJpa;
+import com.github.enteraname74.musik.infrastructure.model.PostgresMusicEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,34 +22,34 @@ import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
-public class MusicRepositoryTests {
+public class MusicDaoTests {
 
-    private MusicRepository musicRepository;
-
-    @MockBean
     private MusicDao musicDao;
 
-    ArrayList<Music> allMusics;
+    @MockBean
+    private PostgresMusicJpa jpa;
+
+    ArrayList<PostgresMusicEntity> allMusics;
 
     @BeforeEach
     public void init() {
-        musicRepository = new PostgresMusicRepositoryImpl(musicDao);
+        musicDao = new PostgresMusicDaoImpl(jpa);
 
-        Music firstMusic = new Music("1", "", "", "", "");
-        Music secondMusic = new Music("2", "", "", "", "");
+        PostgresMusicEntity firstMusic = new PostgresMusicEntity("1", "", "", "", "");
+        PostgresMusicEntity secondMusic = new PostgresMusicEntity("2", "", "", "", "");
 
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
 
-        Mockito.when(musicDao.getAll()).thenReturn(allMusics);
-        Mockito.when(musicDao.getById(any(String.class))).thenAnswer(i -> {
+        Mockito.when(jpa.findAll()).thenReturn(allMusics);
+        Mockito.when(jpa.findById(any(String.class))).thenAnswer(i -> {
             String id = (String) i.getArguments()[0];
             return allMusics.stream().filter(
                     music -> music.getId().equals(id)
             ).findFirst();
         });
-        Mockito.when(musicDao.upsert(any(Music.class))).thenAnswer(i -> {
-            Music music = (Music) i.getArguments()[0];
+        Mockito.when(jpa.save(any(PostgresMusicEntity.class))).thenAnswer(i -> {
+            PostgresMusicEntity music = (PostgresMusicEntity) i.getArguments()[0];
             allMusics.add(music);
             return music;
         });
@@ -60,13 +61,13 @@ public class MusicRepositoryTests {
                 System.out.println("SIZE: " + allMusics.size());
             }
             return null;
-        }).when(musicDao).deleteById(any(String.class));
+        }).when(jpa).deleteById(any(String.class));
     }
 
     @Test
     public void givenCorrectMusicId_whenGetById_thenFoundMusic() {
         String correctId = "1";
-        Optional<Music> foundMusic = musicRepository.getById(correctId);
+        Optional<Music> foundMusic = musicDao.getById(correctId);
 
         Assert.isTrue(foundMusic.isPresent(), "The id should have returned a found music");
     }
@@ -74,45 +75,31 @@ public class MusicRepositoryTests {
     @Test
     public void givenWrongMusicId_whenGetById_thenFoundNothing() {
         String wrongId = "45";
-        Optional<Music> foundMusic = musicRepository.getById(wrongId);
+        Optional<Music> foundMusic = musicDao.getById(wrongId);
 
         Assert.isTrue(foundMusic.isEmpty(), "The id should have returned nothing");
     }
 
     @Test
     public void givenMusics_whenGetAll_thenRetrieveAllMusics() {
-        List<Music> result = musicRepository.getAll();
+        List<Music> result = musicDao.getAll();
 
         Assert.isTrue(result.size() == 2, "All musics were not retrieved");
     }
 
     @Test
     public void givenCorrectMusicId_whenDeleteById_thenShouldBeDeleted() {
-        musicRepository.deleteById("1");
-        Optional<Music> foundMusic = musicRepository.getById("1");
+        musicDao.deleteById("1");
+        Optional<Music> foundMusic = musicDao.getById("1");
 
         Assert.isTrue(foundMusic.isEmpty(), "The deleted music should not be found");
     }
 
     @Test
-    public void givenCorrectMusicId_whenCheckingIfExists_thenReturnsTrue() {
-        boolean doesExists = musicRepository.doesElementExists("1");
-
-        Assert.isTrue(doesExists, "The music should be found");
-    }
-
-    @Test
-    public void givenWrongMusicId_whenCheckingIfExists_thenReturnsTrue() {
-        boolean doesExists = musicRepository.doesElementExists("45");
-
-        Assert.isTrue(!doesExists, "The music should not be found");
-    }
-
-    @Test
     public void givenWrongMusicId_whenDeleteById_thenNothingChange() {
-        musicRepository.deleteById("45");
+        musicDao.deleteById("45");
 
-        List<Music> allMusics = musicRepository.getAll();
+        List<Music> allMusics = musicDao.getAll();
 
         Assert.isTrue(allMusics.size() == 2, "A music was deleted, it should not be the case");
     }
@@ -120,11 +107,11 @@ public class MusicRepositoryTests {
     @Test
     public void givenNewMusic_whenAddingMusic_thenMusicAddedInAllMusics() {
         Music newMusic = new Music("3", "", "", "", "");
-        Music result = musicRepository.save(newMusic);
+        Music result = musicDao.upsert(newMusic);
 
         Assert.isTrue(newMusic.equals(result), "The element should not be altered after being saved");
 
-        List<Music> allMusics = musicRepository.getAll();
+        List<Music> allMusics = musicDao.getAll();
         Assert.isTrue(allMusics.size() == 3, "The music was not added to all musics");
     }
 }

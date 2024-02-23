@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(MusicInformationController.class)
-public class MusicControllerTest {
+public class MusicControllerTests {
 
     @Autowired
     private MockMvc mockMvc;

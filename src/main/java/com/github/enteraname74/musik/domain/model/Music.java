@@ -110,4 +110,28 @@ public class Music {
                 ""
         );
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        // If the object is compared with itself then return true
+        if (obj == this) {
+            return true;
+        }
+
+        /* Check if o is an instance of Complex or not
+          "null instanceof [type]" also returns false */
+        if (!(obj instanceof Music music)) {
+            return false;
+        }
+
+        // typecast o to Complex so that we can compare data members
+
+        boolean sameId = music.id.equals(this.id);
+        boolean sameName = music.name.equals(this.name);
+        boolean sameAlbum = music.album.equals(this.album);
+        boolean sameArtist = music.artist.equals(this.artist);
+        boolean sameAlbumArtwork = music.albumArtworkUrl.equals(this.albumArtworkUrl);
+
+        return sameId && sameName && sameAlbum && sameArtist && sameAlbumArtwork;
+    }
 }
