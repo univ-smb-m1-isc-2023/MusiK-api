@@ -91,7 +91,7 @@ public class MusicFileServiceImpl implements MusicFileService {
             System.out.println("GOT FILE: "+musicFile.get().length());
             return new ServiceResult<>(
                     HttpStatus.OK,
-                    musicFile.get().getAbsolutePath()
+                    musicFile.get()
             );
         }
     }

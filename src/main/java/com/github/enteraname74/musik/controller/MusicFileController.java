@@ -53,7 +53,7 @@ public class MusicFileController {
         if (result.getHttpStatus().is2xxSuccessful()) {
             System.out.println("RESULT: "+result.getResult());
             // Got a file !
-            File file = new File(String.valueOf(result.getResult())); // Replace with the path to your file
+            File file = (File) result.getResult(); // Replace with the path to your file
 
             // Set the content type and length of the file
             HttpHeaders headers = new HttpHeaders();
