@@ -3,8 +3,6 @@ package com.github.enteraname74.musik.domain.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.enteraname74.musik.domain.utils.IdGenerator;
 
-import java.util.UUID;
-
 /**
  * Represent a music and its information.
  */
@@ -84,5 +82,32 @@ public class Music {
 
     public void setAlbumArtworkUrl(String albumArtworkUrl) {
         this.albumArtworkUrl = albumArtworkUrl;
+    }
+
+    /**
+     * Build a Music object without information. It only holds the id of the music file.
+     *
+     * @param id the id of the music file.
+     * @return a Music.
+     */
+    public static Music emptyMusicInformation(String id) {
+        return new Music(id, "", "", "", "");
+    }
+
+    /**
+     * Build a Music object with information from a MusicMetadata element.
+     *
+     * @param id the id of the music file.
+     * @param metadata the metadata used for the music file.
+     * @return a Music.
+     */
+    public static Music ofMetadata(String id, MusicMetadata metadata) {
+        return new Music(
+                id,
+                metadata.getName(),
+                metadata.getArtist(),
+                metadata.getAlbum(),
+                ""
+        );
     }
 }

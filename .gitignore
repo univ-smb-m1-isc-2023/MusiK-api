@@ -6,6 +6,7 @@ target/
 
 data
 musics
+.env
 compose.yaml
 
 ### STS ###

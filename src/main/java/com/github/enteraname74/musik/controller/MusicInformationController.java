@@ -2,7 +2,6 @@ package com.github.enteraname74.musik.controller;
 
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.service.MusicInformationService;
-import com.github.enteraname74.musik.domain.utils.IdGenerator;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,20 +54,6 @@ public class MusicInformationController {
             @PathVariable String id
     ) {
         ServiceResult<?> result = musicInformationService.deleteById(id);
-
-        return new ResponseEntity<>(result.getResult(), result.getHttpStatus());
-    }
-
-    @GetMapping("/dummy")
-    ResponseEntity<?> saveDummy() {
-        Music music = new Music(
-                IdGenerator.generateRandomId(),
-                "NAME",
-                "ARTIST",
-                "ALBUM",
-                ""
-        );
-        ServiceResult<?> result = musicInformationService.save(music);
 
         return new ResponseEntity<>(result.getResult(), result.getHttpStatus());
     }

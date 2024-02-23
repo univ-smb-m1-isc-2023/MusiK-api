@@ -52,6 +52,25 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<!-- For editing and accessing audio file metadata -->
+		<dependency>
+			<groupId>net.jthink</groupId>
+			<artifactId>jaudiotagger</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
