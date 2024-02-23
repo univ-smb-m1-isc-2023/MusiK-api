@@ -7,7 +7,6 @@ target/
 data
 musics
 .env
-compose.yaml
 
 ### STS ###
 .apt_generated

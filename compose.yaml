@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    image: 'docker-spring-boot-postgres:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - postgresDb
+    environment:
+      - SPRING_DATASOURCE_URL=${DATABASE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATABASE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    volumes:
+      - ./musics:/app/musics
+    ports:
+      - "8080:8080"
+
+  postgresDb:
+    image: 'postgres:latest'
+    container_name: postgresDb
+    environment:
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - ./data:/var/lib/postgresql/data:z
+    ports:
+      - "5432:5432"
