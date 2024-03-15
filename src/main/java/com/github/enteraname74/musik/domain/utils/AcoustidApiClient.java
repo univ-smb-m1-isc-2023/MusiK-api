@@ -13,12 +13,12 @@ import java.net.http.HttpResponse;
 public class AcoustidApiClient {
     private final AppHttpClient httpClient;
     private final String API_KEY;
-
     private final MusicMetadata initialMetadata;
 
     public AcoustidApiClient(MusicMetadata initialMetadata) {
         this.initialMetadata = initialMetadata;
         this.httpClient = new AppHttpClient();
+        this.API_KEY = "";
     }
 
     /**
