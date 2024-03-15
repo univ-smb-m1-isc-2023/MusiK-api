@@ -1,9 +1,8 @@
-package com.github.enteraname74.musik.controllertest;
+package com.github.enteraname74.musik.controller;
 
-import com.github.enteraname74.musik.controller.MusicController;
 import com.github.enteraname74.musik.controller.utils.ControllerMessages;
 import com.github.enteraname74.musik.domain.model.Music;
-import com.github.enteraname74.musik.domain.service.MusicService;
+import com.github.enteraname74.musik.domain.service.MusicInformationService;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,24 +30,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(MusicController.class)
-public class MusicControllerTest {
+@WebMvcTest(MusicInformationController.class)
+public class MusicControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private MusicService musicService;
+    private MusicInformationService musicInformationService;
+
     ArrayList<Music> allMusics;
 
     @BeforeEach
     public void init() {
-        Music firstMusic = new Music("1", "", "MUSICNAME", "", "");
+        Music firstMusic = new Music("1", "MUSICNAME", "", "", "");
         Music secondMusic = new Music("2", "", "", "", "");
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
 
-        Mockito.when(musicService.getById(firstMusic.getId())).thenAnswer(i -> {
+        Mockito.when(musicInformationService.getById(firstMusic.getId())).thenAnswer(i -> {
             String id = (String) i.getArguments()[0];
             Optional<Music> foundMusic = allMusics.stream().filter(
                     music -> music.getId().equals(id)
@@ -66,7 +66,7 @@ public class MusicControllerTest {
                 );
             }
         });
-        Mockito.when(musicService.getAll()).thenReturn(allMusics);
+        Mockito.when(musicInformationService.getAll()).thenReturn(allMusics);
 
         Mockito.doAnswer(invocationOnMock -> {
             Object[] arguments = invocationOnMock.getArguments();
@@ -76,9 +76,9 @@ public class MusicControllerTest {
                 System.out.println("SIZE: " + allMusics.size());
             }
             return new ServiceResult<>(HttpStatus.OK, ControllerMessages.MUSIC_DELETED);
-        }).when(musicService).deleteById(any(String.class));
+        }).when(musicInformationService).deleteById(any(String.class));
 
-        Mockito.when(musicService.save(any())).thenAnswer(i -> {
+        Mockito.when(musicInformationService.save(any())).thenAnswer(i -> {
             Music music = (Music) i.getArguments()[0];
             allMusics.add(music);
             return new ServiceResult<>(HttpStatus.ACCEPTED, music);
@@ -87,7 +87,7 @@ public class MusicControllerTest {
 
     @Test
     public void givenMusics_whenGetById_thenRetrieveMusic() throws Exception {
-        mockMvc.perform(get("/music/{id}", "1"))
+        mockMvc.perform(get("/music/information/{id}", "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("MUSICNAME"));
@@ -95,7 +95,7 @@ public class MusicControllerTest {
 
     @Test
     public void givenMusics_whenGetAll_thenShouldGetAllMusics() throws Exception {
-        mockMvc.perform(get("/music/all"))
+        mockMvc.perform(get("/music/information/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
@@ -103,7 +103,7 @@ public class MusicControllerTest {
 
     @Test
     public void givenMusics_whenDeleteById_thenMusicShouldBeDeleted() throws Exception {
-        mockMvc.perform(delete("/music/{id}", "1"))
+        mockMvc.perform(delete("/music/information/{id}", "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(ControllerMessages.MUSIC_DELETED)));

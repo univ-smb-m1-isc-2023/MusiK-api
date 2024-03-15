@@ -1,8 +1,8 @@
 package com.github.enteraname74.musik.infrastructure.repositoryimpl;
 
+import com.github.enteraname74.musik.domain.dao.MusicDao;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
-import com.github.enteraname74.musik.infrastructure.daoimpl.PostgresMusicDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,10 +15,10 @@ import java.util.Optional;
 @Repository
 public class PostgresMusicRepositoryImpl implements MusicRepository {
 
-    private final PostgresMusicDaoImpl musicDao;
+    private final MusicDao musicDao;
 
     @Autowired
-    public PostgresMusicRepositoryImpl(PostgresMusicDaoImpl musicDao) {
+    public PostgresMusicRepositoryImpl(MusicDao musicDao) {
         this.musicDao = musicDao;
     }
 

@@ -6,7 +6,7 @@ You need to have docker installed on your machine as it is used for running the 
 
 ## 2. Launch the application
 
-You will need to do theses things in order:
+You will need to do these things in order:
 
 1. Launch docker on your device
 

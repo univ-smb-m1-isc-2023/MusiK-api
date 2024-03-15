@@ -9,7 +9,7 @@ import java.util.List;
  * Service for managing Musics.
  * Used to check if given information are correct, manage returned data and response code.
  */
-public interface MusicService {
+public interface MusicInformationService {
 
     /**
      * Retrieves all Musics.

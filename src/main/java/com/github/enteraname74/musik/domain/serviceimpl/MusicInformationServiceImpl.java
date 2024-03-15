@@ -3,7 +3,7 @@ package com.github.enteraname74.musik.domain.serviceimpl;
 import com.github.enteraname74.musik.controller.utils.ControllerMessages;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
-import com.github.enteraname74.musik.domain.service.MusicService;
+import com.github.enteraname74.musik.domain.service.MusicInformationService;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +15,12 @@ import java.util.List;
  * Implementation of the MusicService.
  */
 @Service
-public class MusicServiceImpl implements MusicService {
+public class MusicInformationServiceImpl implements MusicInformationService {
 
     private final MusicRepository musicRepository;
 
     @Autowired
-    public MusicServiceImpl(MusicRepository musicRepository) {
+    public MusicInformationServiceImpl(MusicRepository musicRepository) {
         this.musicRepository = musicRepository;
     }
 

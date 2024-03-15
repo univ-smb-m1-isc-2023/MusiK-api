@@ -1,9 +1,9 @@
-package com.github.enteraname74.musik.servicetest;
+package com.github.enteraname74.musik.service;
 
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
-import com.github.enteraname74.musik.domain.service.MusicService;
-import com.github.enteraname74.musik.domain.serviceimpl.MusicServiceImpl;
+import com.github.enteraname74.musik.domain.service.MusicInformationService;
+import com.github.enteraname74.musik.domain.serviceimpl.MusicInformationServiceImpl;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,8 +25,8 @@ import static org.mockito.ArgumentMatchers.any;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
 @SuppressWarnings("unchecked")
-public class MusicServiceTests {
-    private MusicService musicService;
+public class MusicInformationServiceTests {
+    private MusicInformationService musicInformationService;
 
     @MockBean
     private MusicRepository musicRepository;
@@ -34,7 +34,7 @@ public class MusicServiceTests {
 
     @BeforeEach
     public void init() {
-        musicService = new MusicServiceImpl(musicRepository);
+        musicInformationService = new MusicInformationServiceImpl(musicRepository);
         Music firstMusic = new Music("1", "", "", "", "");
         Music secondMusic = new Music("2", "", "", "", "");
 
@@ -50,11 +50,11 @@ public class MusicServiceTests {
                 }
         );
         Mockito.when(musicRepository.getById(any(String.class))).thenAnswer(i -> {
-                String id = (String) i.getArguments()[0];
-                return allMusics.stream().filter(
-                        music -> music.getId().equals(id)
-                ).findFirst();
-            }
+                    String id = (String) i.getArguments()[0];
+                    return allMusics.stream().filter(
+                            music -> music.getId().equals(id)
+                    ).findFirst();
+                }
         );
         Mockito.when(musicRepository.getAll()).thenReturn(allMusics);
 
@@ -78,7 +78,7 @@ public class MusicServiceTests {
     @Test
     public void givenMusics_whenGetById_thenFoundMusic() {
         String id = "1";
-        ServiceResult<?> result = musicService.getById(id);
+        ServiceResult<?> result = musicInformationService.getById(id);
 
         Assert.isInstanceOf(Optional.class, result.getResult());
         Assert.isTrue(result.getHttpStatus().equals(HttpStatus.OK), "The returned HTTP status is not correct");
@@ -89,14 +89,14 @@ public class MusicServiceTests {
 
     @Test
     public void givenMusics_whenGetAll_thenRetrieveAllMusics() {
-        List<Music> result = musicService.getAll();
+        List<Music> result = musicInformationService.getAll();
 
         Assert.isTrue(result.size() == 2, "All musics were not retrieved");
     }
 
     @Test
     public void givenMusics_whenDeleteById_thenMusicShouldBeRemoved() {
-        ServiceResult<?> result = musicService.deleteById("1");
+        ServiceResult<?> result = musicInformationService.deleteById("1");
         Assert.isTrue(result.getHttpStatus().equals(HttpStatus.OK), "The music was not deleted correctly");
 
 //        List<Music> allRemainingMusics = musicService.getAll();
@@ -110,11 +110,11 @@ public class MusicServiceTests {
     @Test
     public void givenNewMusic_whenAddingMusic_thenMusicAddedInAllMusics() {
         Music newMusic = new Music("3", "", "", "", "");
-        ServiceResult<?> result = musicService.save(newMusic);
+        ServiceResult<?> result = musicInformationService.save(newMusic);
 
         Assert.isTrue(result.getHttpStatus().equals(HttpStatus.ACCEPTED), "Music was not added successfully");
 
-        List<Music> allMusics = musicService.getAll();
+        List<Music> allMusics = musicInformationService.getAll();
         Assert.isTrue(allMusics.size() == 3, "The music was not added to all musics");
     }
 }
