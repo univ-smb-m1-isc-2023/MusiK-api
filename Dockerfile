@@ -7,7 +7,7 @@ RUN apk update && \
     chromaprint \
     && rm -rf /var/cache/apk/*
 
-COPY .env /
+# COPY .env /
 
 # Create a volume for music files
 VOLUME /app/musics

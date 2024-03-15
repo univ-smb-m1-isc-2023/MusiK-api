@@ -35,5 +35,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: univ-smb-m1-isc-2023/MusiK-api/main
+          repository: univ-smb-m1-isc-2023/musik-api/main
           tags: latest

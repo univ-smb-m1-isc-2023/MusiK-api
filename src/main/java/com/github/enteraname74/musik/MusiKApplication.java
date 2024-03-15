@@ -11,9 +11,9 @@ public class MusiKApplication {
 		SpringApplication.run(MusiKApplication.class, args);
 	}
 
-	@Bean
-	public Dotenv dotenv() {
-		return Dotenv.configure().directory(".").load();
-	}
+//	@Bean
+//	public Dotenv dotenv() {
+//		return Dotenv.configure().directory(".").load();
+//	}
 }
 

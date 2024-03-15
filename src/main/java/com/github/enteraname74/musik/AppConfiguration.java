@@ -11,16 +11,16 @@ import org.springframework.core.io.FileSystemResource;
 @Configuration
 public class AppConfiguration {
 
-    /**
-     * Loads the .env file in the application.
-     *
-     * @return a configuration with the .env file.
-     */
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        configurer.setLocation(new FileSystemResource(".env"));
-        return configurer;
-    }
+//    /**
+//     * Loads the .env file in the application.
+//     *
+//     * @return a configuration with the .env file.
+//     */
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+//        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+//        configurer.setLocation(new FileSystemResource(".env"));
+//        return configurer;
+//    }
 
 }
