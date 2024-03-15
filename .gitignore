@@ -4,7 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-compose.yaml
+data
+musics
+.env
 
 ### STS ###
 .apt_generated

@@ -11,6 +11,7 @@ public interface Dao<T> {
 
     /**
      * Tries to retrieve an element by its id.
+     *
      * @param id the id of the element we want to retrieve.
      * @return the potential found element.
      */
@@ -18,18 +19,21 @@ public interface Dao<T> {
 
     /**
      * Retrieve all elements in the database.
+     *
      * @return a list containing all elements in the database.
      */
     List<T> getAll();
 
     /**
      * Insert or update an element to the database.
+     *
      * @param element the element to save / modify.
      */
     T upsert(T element);
 
     /**
      * Delete an element by its id.
+     *
      * @param id the id of the element to delete.
      */
     void deleteById(String id);
