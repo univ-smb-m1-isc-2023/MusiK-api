@@ -47,7 +47,6 @@ public class MusicFileController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable String id) {
-        System.out.println("Got request !");
         ServiceResult<?> result = musicFileService.getById(id);
 
         if (result.getHttpStatus().is2xxSuccessful()) {

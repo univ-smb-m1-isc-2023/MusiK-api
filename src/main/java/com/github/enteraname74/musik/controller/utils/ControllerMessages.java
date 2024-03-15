@@ -9,4 +9,8 @@ public class ControllerMessages {
     public static String MUSIC_CANNOT_BE_SAVED = "The given music cannot be saved.";
     public static String MUSIC_DELETED = "The music has been deleted.";
     public static String FILE_IS_NOT_A_MUSIC = "The given file is not a music file.";
+
+    /********************* GENERAL ****************************/
+
+    public static String SERVICE_UNREACHABLE = "The service is unreachable";
 }
