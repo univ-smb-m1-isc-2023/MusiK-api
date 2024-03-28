@@ -2,6 +2,7 @@ package com.github.enteraname74.musik.infrastructure.repositoryimpl;
 
 import com.github.enteraname74.musik.domain.dao.MusicDao;
 import com.github.enteraname74.musik.domain.model.Music;
+import com.github.enteraname74.musik.domain.model.MusicMetadata;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,5 +46,12 @@ public class PostgresMusicRepositoryImpl implements MusicRepository {
     @Override
     public boolean doesElementExists(String id) {
         return musicDao.getById(id).isPresent();
+    }
+
+    @Override
+    public Boolean doesMusicExistWithMetadata(MusicMetadata metadata) {
+        List<Music> allMusics = musicDao.getAll();
+
+        return allMusics.stream().anyMatch(music -> music.hasSameMetadata(metadata));
     }
 }

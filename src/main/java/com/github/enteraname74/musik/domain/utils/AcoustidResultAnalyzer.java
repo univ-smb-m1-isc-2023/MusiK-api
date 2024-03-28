@@ -110,9 +110,6 @@ public class AcoustidResultAnalyzer {
      */
     private Optional<AcoustidMatch> getOptimalMatch() {
         try {
-            System.out.println(requestResult.getResults());
-            System.out.println(requestResult.getResults().size());
-
             requestResult.getResults().sort((match1, match2) -> (int) ((match1.getScore() - match2.getScore()) * 100));
 
             return Optional.of(requestResult.getResults().get(

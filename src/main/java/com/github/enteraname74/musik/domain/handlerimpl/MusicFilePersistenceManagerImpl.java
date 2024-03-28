@@ -94,4 +94,11 @@ public class MusicFilePersistenceManagerImpl implements MusicFilePersistenceMana
 
         return Optional.empty();
     }
+
+    @Override
+    public Boolean deleteFile(String id) {
+        Optional<File> fileToDelete = getById(id);
+
+        return fileToDelete.map(File::delete).orElse(false);
+    }
 }

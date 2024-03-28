@@ -1,15 +1,14 @@
 package com.github.enteraname74.musik.domain.service;
 
+import com.github.enteraname74.musik.domain.handler.MusicFilePersistenceManager;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
 import com.github.enteraname74.musik.domain.repository.PlaylistRepository;
-import com.github.enteraname74.musik.domain.service.MusicInformationService;
 import com.github.enteraname74.musik.domain.serviceimpl.MusicInformationServiceImpl;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -36,14 +35,15 @@ public class MusicInformationServiceTests {
     @MockBean
     private PlaylistRepository playlistRepository;
 
+    @MockBean
+    private MusicFilePersistenceManager musicFilePersistenceManager;
     ArrayList<Music> allMusics;
 
     @BeforeEach
     public void init() {
-        musicInformationService = new MusicInformationServiceImpl(musicRepository, playlistRepository);
+        musicInformationService = new MusicInformationServiceImpl(musicRepository, playlistRepository, musicFilePersistenceManager);
         Music firstMusic = new Music("1", "", "", "", "", new ArrayList<>());
         Music secondMusic = new Music("2", "", "", "", "", new ArrayList<>());
-
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
 
@@ -81,6 +81,7 @@ public class MusicInformationServiceTests {
         });
 
         Mockito.when(playlistRepository.removeMusicFromPlaylist(any(String.class), any(String.class))).thenAnswer(i -> true);
+        Mockito.doAnswer(invocationOnMock -> true).when(musicFilePersistenceManager).deleteFile(any(String.class));
     }
 
     @Test
