@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.net.URLEncoder;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
@@ -55,7 +53,7 @@ public class LyricsServiceImpl implements LyricsService {
 
             return new ServiceResult<>(
                     HttpStatus.OK,
-                    lyristResult.getLyrics()
+                    lyristResult.lyrics()
             );
 
         } catch (Exception e) {

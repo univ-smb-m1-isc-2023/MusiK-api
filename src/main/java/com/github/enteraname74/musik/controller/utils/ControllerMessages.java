@@ -13,4 +13,8 @@ public class ControllerMessages {
     /********************* GENERAL ****************************/
 
     public static String SERVICE_UNREACHABLE = "The service is unreachable";
+
+    /********************* COVERS *****************************/
+
+    public static String CANNOT_FIND_COVER = "Cannot find the cover for the given id.";
 }
