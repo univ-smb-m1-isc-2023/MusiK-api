@@ -3,20 +3,19 @@ package com.github.enteraname74.musik.infrastructure.daoimpl;
 import com.github.enteraname74.musik.domain.dao.MusicDao;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.infrastructure.jpa.PostgresMusicJpa;
+import com.github.enteraname74.musik.infrastructure.jpa.PostgresPlaylistJpa;
 import com.github.enteraname74.musik.infrastructure.model.PostgresMusicEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -29,14 +28,17 @@ public class MusicDaoTests {
     @MockBean
     private PostgresMusicJpa jpa;
 
+    @MockBean
+    private PostgresPlaylistJpa playlistJpa;
+
     ArrayList<PostgresMusicEntity> allMusics;
 
     @BeforeEach
     public void init() {
-        musicDao = new PostgresMusicDaoImpl(jpa);
+        musicDao = new PostgresMusicDaoImpl(jpa, playlistJpa);
 
-        PostgresMusicEntity firstMusic = new PostgresMusicEntity("1", "", "", "", "");
-        PostgresMusicEntity secondMusic = new PostgresMusicEntity("2", "", "", "", "");
+        PostgresMusicEntity firstMusic = new PostgresMusicEntity("1", "", "", "", "", Collections.emptyList());
+        PostgresMusicEntity secondMusic = new PostgresMusicEntity("2", "", "", "", "", Collections.emptyList());
 
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));

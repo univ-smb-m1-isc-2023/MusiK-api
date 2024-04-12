@@ -3,6 +3,11 @@ package com.github.enteraname74.musik.domain.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.enteraname74.musik.domain.utils.IdGenerator;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 /**
  * Represent a music and its information.
  */
@@ -23,12 +28,16 @@ public class Music {
     @JsonProperty("albumArtworkUrl")
     private String albumArtworkUrl;
 
-    public Music(String id, String name, String artist, String album, String albumArtworkUrl) {
+    @JsonProperty("playlistIds")
+    private List<String> playlistIds;
+
+    public Music(String id, String name, String artist, String album, String albumArtworkUrl, List<String> playlistIds) {
         this.id = id;
         this.name = name;
         this.artist = artist;
         this.album = album;
         this.albumArtworkUrl = albumArtworkUrl;
+        this.playlistIds = playlistIds;
     }
 
     /**
@@ -40,7 +49,8 @@ public class Music {
                 "",
                 "",
                 "",
-                ""
+                "",
+                Collections.emptyList()
         );
     }
 
@@ -84,6 +94,14 @@ public class Music {
         this.albumArtworkUrl = albumArtworkUrl;
     }
 
+    public List<String> getPlaylistIds() {
+        return playlistIds;
+    }
+
+    public void setPlaylistIds(List<String> playlistIds) {
+        this.playlistIds = playlistIds;
+    }
+
     /**
      * Build a Music object without information. It only holds the id of the music file.
      *
@@ -91,7 +109,7 @@ public class Music {
      * @return a Music.
      */
     public static Music emptyMusicInformation(String id) {
-        return new Music(id, "", "", "", "");
+        return new Music(id, "", "", "", "", Collections.emptyList());
     }
 
     /**
@@ -107,31 +125,21 @@ public class Music {
                 metadata.getName(),
                 metadata.getArtist(),
                 metadata.getAlbum(),
-                ""
+                "",
+                Collections.emptyList()
         );
     }
 
     @Override
-    public boolean equals(Object obj) {
-        // If the object is compared with itself then return true
-        if (obj == this) {
-            return true;
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Music music = (Music) o;
+        return Objects.equals(id, music.id) && Objects.equals(name, music.name) && Objects.equals(artist, music.artist) && Objects.equals(album, music.album) && Objects.equals(albumArtworkUrl, music.albumArtworkUrl) && Objects.equals(playlistIds, music.playlistIds);
+    }
 
-        /* Check if o is an instance of Complex or not
-          "null instanceof [type]" also returns false */
-        if (!(obj instanceof Music music)) {
-            return false;
-        }
-
-        // typecast o to Complex so that we can compare data members
-
-        boolean sameId = music.id.equals(this.id);
-        boolean sameName = music.name.equals(this.name);
-        boolean sameAlbum = music.album.equals(this.album);
-        boolean sameArtist = music.artist.equals(this.artist);
-        boolean sameAlbumArtwork = music.albumArtworkUrl.equals(this.albumArtworkUrl);
-
-        return sameId && sameName && sameAlbum && sameArtist && sameAlbumArtwork;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, artist, album, albumArtworkUrl, playlistIds);
     }
 }

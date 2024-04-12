@@ -1,6 +1,7 @@
 package com.github.enteraname74.musik.infrastructure;
 
 import com.github.enteraname74.musik.infrastructure.repositoryimpl.PostgresMusicRepositoryImpl;
+import com.github.enteraname74.musik.infrastructure.repositoryimpl.PostgresPlaylistRepositoryImpl;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -8,7 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @EnableJpaRepositories(
         basePackageClasses = {
-                PostgresMusicRepositoryImpl.class
+                PostgresMusicRepositoryImpl.class,
+                PostgresPlaylistRepositoryImpl.class
         }
 )
 public class PostgresDatabaseConfiguration {
