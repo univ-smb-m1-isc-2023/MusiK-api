@@ -33,10 +33,9 @@ public class RemoteMusicCoverRetrieverImpl implements RemoteMusicCoverRetriever 
             Gson gson = new Gson();
             LyristResult lyristResult = gson.fromJson(response.body(), LyristResult.class);
 
-            return Optional.of(lyristResult.lyrics());
+            return Optional.of(lyristResult.image());
         } catch (Exception e) {
             return Optional.empty();
-
         }
     }
 }
