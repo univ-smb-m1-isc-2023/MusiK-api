@@ -3,6 +3,7 @@ package com.github.enteraname74.musik.domain.serviceimpl;
 import com.github.enteraname74.musik.controller.utils.ControllerMessages;
 import com.github.enteraname74.musik.domain.handler.MusicFilePersistenceManager;
 import com.github.enteraname74.musik.domain.handler.MusicInformationRetriever;
+import com.github.enteraname74.musik.domain.handler.RemoteMusicCoverRetriever;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
 import com.github.enteraname74.musik.domain.service.MusicFileService;
@@ -25,16 +26,20 @@ public class MusicFileServiceImpl implements MusicFileService {
     private final MusicFilePersistenceManager musicFilePersistenceManager;
     private final MusicRepository musicRepository;
 
+    private final RemoteMusicCoverRetriever remoteMusicCoverRetriever;
+
     private final MusicInformationRetriever musicInformationRetriever;
+
 
     @Autowired
     public MusicFileServiceImpl(
             MusicFilePersistenceManager musicFilePersistenceManager,
-            MusicRepository musicRepository,
+            MusicRepository musicRepository, RemoteMusicCoverRetriever remoteMusicCoverRetriever,
             MusicInformationRetriever musicInformationRetriever
     ) {
         this.musicFilePersistenceManager = musicFilePersistenceManager;
         this.musicRepository = musicRepository;
+        this.remoteMusicCoverRetriever = remoteMusicCoverRetriever;
         this.musicInformationRetriever = musicInformationRetriever;
     }
 
@@ -71,6 +76,18 @@ public class MusicFileServiceImpl implements MusicFileService {
                 musicFile.get(),
                 savedFileId
         );
+
+        Optional<String> remoteCoverUrl = remoteMusicCoverRetriever.getCoverURL(
+                musicInformation.getName(),
+                musicInformation.getArtist()
+        );
+
+        String urlToSave;
+        urlToSave = remoteCoverUrl.orElse("");
+
+        musicInformation.setAlbumArtworkUrl(urlToSave);
+
+        System.out.println("Url of the cover art: "+musicInformation.getAlbumArtworkUrl());
 
         // Finally, we save the music information.
         musicRepository.save(musicInformation);

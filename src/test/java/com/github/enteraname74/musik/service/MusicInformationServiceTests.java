@@ -2,12 +2,14 @@ package com.github.enteraname74.musik.service;
 
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
+import com.github.enteraname74.musik.domain.repository.PlaylistRepository;
 import com.github.enteraname74.musik.domain.service.MusicInformationService;
 import com.github.enteraname74.musik.domain.serviceimpl.MusicInformationServiceImpl;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,13 +32,17 @@ public class MusicInformationServiceTests {
 
     @MockBean
     private MusicRepository musicRepository;
+
+    @MockBean
+    private PlaylistRepository playlistRepository;
+
     ArrayList<Music> allMusics;
 
     @BeforeEach
     public void init() {
-        musicInformationService = new MusicInformationServiceImpl(musicRepository);
-        Music firstMusic = new Music("1", "", "", "", "");
-        Music secondMusic = new Music("2", "", "", "", "");
+        musicInformationService = new MusicInformationServiceImpl(musicRepository, playlistRepository);
+        Music firstMusic = new Music("1", "", "", "", "", new ArrayList<>());
+        Music secondMusic = new Music("2", "", "", "", "", new ArrayList<>());
 
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
@@ -73,6 +79,8 @@ public class MusicInformationServiceTests {
             allMusics.add(music);
             return music;
         });
+
+        Mockito.when(playlistRepository.removeMusicFromPlaylist(any(String.class), any(String.class))).thenAnswer(i -> true);
     }
 
     @Test
@@ -109,7 +117,7 @@ public class MusicInformationServiceTests {
 
     @Test
     public void givenNewMusic_whenAddingMusic_thenMusicAddedInAllMusics() {
-        Music newMusic = new Music("3", "", "", "", "");
+        Music newMusic = new Music("3", "", "", "", "", new ArrayList<>());
         ServiceResult<?> result = musicInformationService.save(newMusic);
 
         Assert.isTrue(result.getHttpStatus().equals(HttpStatus.ACCEPTED), "Music was not added successfully");
