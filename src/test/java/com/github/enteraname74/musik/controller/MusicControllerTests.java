@@ -25,7 +25,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,8 +42,8 @@ public class MusicControllerTests {
 
     @BeforeEach
     public void init() {
-        Music firstMusic = new Music("1", "MUSICNAME", "", "", "");
-        Music secondMusic = new Music("2", "", "", "", "");
+        Music firstMusic = new Music("1", "MUSICNAME", "", "", "", new ArrayList<>());
+        Music secondMusic = new Music("2", "", "", "", "", new ArrayList<>());
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
 

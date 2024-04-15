@@ -10,6 +10,16 @@ public class ControllerMessages {
     public static String MUSIC_DELETED = "The music has been deleted.";
     public static String FILE_IS_NOT_A_MUSIC = "The given file is not a music file.";
 
+    /*********************** PLAYLISTS MESSAGES *******************/
+
+    public static String WRONG_PLAYLIST_ID = "The given id is not bound to a playlist.";
+    public static String PLAYLIST_CANNOT_BE_SAVED = "The given playlist cannot be saved.";
+    public static String PLAYLIST_DELETED = "The playlist has been deleted.";
+    public static String MUSIC_ALREADY_IN_PLAYLIST = "The music is already in the playlist.";
+    public static String MUSIC_NOT_FOUND_IN_PLAYLIST = "The music is not in the playlist.";
+    public static String MUSIC_ADDED_IN_PLAYLIST = "The music was added in the playlist.";
+    public static String MUSIC_REMOVED_FROM_PLAYLIST = "The music was removed from the playlist.";
+
     /********************* GENERAL ****************************/
 
     public static String SERVICE_UNREACHABLE = "The service is unreachable";

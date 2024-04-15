@@ -49,6 +49,13 @@ public class MusicInformationController {
         return new ResponseEntity<>(result.getResult(), result.getHttpStatus());
     }
 
+
+    /**
+     * Delete a Music.
+     *
+     * @param id the id of the Music to delete.
+     * @return a ResponseEntity, with the result of the request.
+     */
     @DeleteMapping("/{id}")
     ResponseEntity<?> delete(
             @PathVariable String id

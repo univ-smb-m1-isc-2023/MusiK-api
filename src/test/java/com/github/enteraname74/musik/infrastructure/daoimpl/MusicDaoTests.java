@@ -3,6 +3,7 @@ package com.github.enteraname74.musik.infrastructure.daoimpl;
 import com.github.enteraname74.musik.domain.dao.MusicDao;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.infrastructure.jpa.PostgresMusicJpa;
+import com.github.enteraname74.musik.infrastructure.jpa.PostgresPlaylistJpa;
 import com.github.enteraname74.musik.infrastructure.model.PostgresMusicEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,14 +30,17 @@ public class MusicDaoTests {
     @MockBean
     private PostgresMusicJpa jpa;
 
+    @MockBean
+    private PostgresPlaylistJpa playlistJpa;
+
     ArrayList<PostgresMusicEntity> allMusics;
 
     @BeforeEach
     public void init() {
-        musicDao = new PostgresMusicDaoImpl(jpa);
+        musicDao = new PostgresMusicDaoImpl(jpa, playlistJpa);
 
-        PostgresMusicEntity firstMusic = new PostgresMusicEntity("1", "", "", "", "");
-        PostgresMusicEntity secondMusic = new PostgresMusicEntity("2", "", "", "", "");
+        PostgresMusicEntity firstMusic = new PostgresMusicEntity("1", "", "", "", "", new ArrayList<>());
+        PostgresMusicEntity secondMusic = new PostgresMusicEntity("2", "", "", "", "", new ArrayList<>());
 
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
@@ -106,7 +110,7 @@ public class MusicDaoTests {
 
     @Test
     public void givenNewMusic_whenAddingMusic_thenMusicAddedInAllMusics() {
-        Music newMusic = new Music("3", "", "", "", "");
+        Music newMusic = new Music("3", "", "", "", "", new ArrayList<>());
         Music result = musicDao.upsert(newMusic);
 
         Assert.isTrue(newMusic.equals(result), "The element should not be altered after being saved");
