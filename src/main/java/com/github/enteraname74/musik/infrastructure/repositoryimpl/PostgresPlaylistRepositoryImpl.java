@@ -5,9 +5,11 @@ import com.github.enteraname74.musik.domain.dao.PlaylistDao;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.model.Playlist;
 import com.github.enteraname74.musik.domain.repository.PlaylistRepository;
+import com.github.enteraname74.musik.domain.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +38,10 @@ public class PostgresPlaylistRepositoryImpl implements PlaylistRepository {
         Playlist playlist = optionalPlaylist.get();
         Music music = optionalMusic.get();
 
-        List<Music> musics = playlist.getMusics();
-        List<String> playlistIds = music.getPlaylistIds();
+        if (music.getPlaylistIds().stream().anyMatch(id -> id.equals(playlistId))) return false;
+
+        ArrayList<Music> musics = playlist.getMusics();
+        ArrayList<String> playlistIds = music.getPlaylistIds();
 
         musics.add(music);
         playlistIds.add(playlistId);
@@ -52,7 +56,7 @@ public class PostgresPlaylistRepositoryImpl implements PlaylistRepository {
     }
 
     @Override
-    public boolean removeMusicToPlaylist(String playlistId, String musicId) {
+    public boolean removeMusicFromPlaylist(String playlistId, String musicId) {
         Optional<Playlist> optionalPlaylist = playlistDao.getById(playlistId);
         Optional<Music> optionalMusic = musicDao.getById(musicId);
 
@@ -61,8 +65,8 @@ public class PostgresPlaylistRepositoryImpl implements PlaylistRepository {
         Playlist playlist = optionalPlaylist.get();
         Music music = optionalMusic.get();
 
-        List<Music> musics = playlist.getMusics();
-        List<String> playlistIds = music.getPlaylistIds();
+        ArrayList<Music> musics = playlist.getMusics();
+        ArrayList<String> playlistIds = music.getPlaylistIds();
 
         if (!musics.removeIf(m -> m.equals(music))) return false;
         if (!playlistIds.removeIf(id -> id.equals(playlistId))) return false;
@@ -88,6 +92,9 @@ public class PostgresPlaylistRepositoryImpl implements PlaylistRepository {
 
     @Override
     public Playlist save(Playlist element) {
+        // The server manage itself the ids of the playlists.
+        element.setId(IdGenerator.generateRandomId());
+
         return playlistDao.upsert(element);
     }
 

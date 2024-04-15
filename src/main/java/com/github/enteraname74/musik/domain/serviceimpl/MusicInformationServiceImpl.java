@@ -3,6 +3,7 @@ package com.github.enteraname74.musik.domain.serviceimpl;
 import com.github.enteraname74.musik.controller.utils.ControllerMessages;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
+import com.github.enteraname74.musik.domain.repository.PlaylistRepository;
 import com.github.enteraname74.musik.domain.service.MusicInformationService;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ import java.util.List;
 public class MusicInformationServiceImpl implements MusicInformationService {
 
     private final MusicRepository musicRepository;
+    private final PlaylistRepository playlistRepository;
 
     @Autowired
-    public MusicInformationServiceImpl(MusicRepository musicRepository) {
+    public MusicInformationServiceImpl(MusicRepository musicRepository, PlaylistRepository playlistRepository) {
         this.musicRepository = musicRepository;
+        this.playlistRepository = playlistRepository;
     }
 
     @Override
@@ -68,6 +71,13 @@ public class MusicInformationServiceImpl implements MusicInformationService {
                     ControllerMessages.WRONG_MUSIC_ID
             );
         }
+
+        // We first need to remove the apparition of this music in playlists :
+        Music musicToDelete = musicRepository.getById(id).get();
+
+        musicToDelete.getPlaylistIds().forEach(playlistId -> playlistRepository.removeMusicFromPlaylist(playlistId, id));
+
+
         musicRepository.deleteById(id);
         return new ServiceResult<>(
                 HttpStatus.OK,

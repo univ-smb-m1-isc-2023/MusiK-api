@@ -17,6 +17,8 @@ public class ControllerMessages {
     public static String PLAYLIST_DELETED = "The playlist has been deleted.";
     public static String MUSIC_ALREADY_IN_PLAYLIST = "The music is already in the playlist.";
     public static String MUSIC_NOT_FOUND_IN_PLAYLIST = "The music is not in the playlist.";
+    public static String MUSIC_ADDED_IN_PLAYLIST = "The music was added in the playlist.";
+    public static String MUSIC_REMOVED_FROM_PLAYLIST = "The music was removed from the playlist.";
 
     /********************* GENERAL ****************************/
 

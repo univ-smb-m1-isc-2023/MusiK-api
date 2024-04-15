@@ -3,6 +3,7 @@ package com.github.enteraname74.musik.domain.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.enteraname74.musik.domain.utils.IdGenerator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,9 +20,9 @@ public class Playlist {
     private String title;
 
     @JsonProperty("musics")
-    private List<Music> musics;
+    private ArrayList<Music> musics;
 
-    public Playlist(String id, String title, List<Music> musics) {
+    public Playlist(String id, String title, ArrayList<Music> musics) {
         this.id = id;
         this.title = title;
         this.musics = musics;
@@ -34,7 +35,7 @@ public class Playlist {
         this(
                 IdGenerator.generateRandomId(),
                 "",
-                Collections.emptyList()
+                new ArrayList<>()
         );
     }
 
@@ -54,11 +55,11 @@ public class Playlist {
         this.title = title;
     }
 
-    public List<Music> getMusics() {
+    public ArrayList<Music> getMusics() {
         return musics;
     }
 
-    public void setMusics(List<Music> musics) {
+    public void setMusics(ArrayList<Music> musics) {
         this.musics = musics;
     }
 }

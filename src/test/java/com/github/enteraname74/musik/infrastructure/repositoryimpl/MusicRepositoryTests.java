@@ -34,8 +34,8 @@ public class MusicRepositoryTests {
     public void init() {
         musicRepository = new PostgresMusicRepositoryImpl(musicDao);
 
-        Music firstMusic = new Music("1", "", "", "", "");
-        Music secondMusic = new Music("2", "", "", "", "");
+        Music firstMusic = new Music("1", "", "", "", "", new ArrayList<>());
+        Music secondMusic = new Music("2", "", "", "", "", new ArrayList<>());
 
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
@@ -119,7 +119,7 @@ public class MusicRepositoryTests {
 
     @Test
     public void givenNewMusic_whenAddingMusic_thenMusicAddedInAllMusics() {
-        Music newMusic = new Music("3", "", "", "", "");
+        Music newMusic = new Music("3", "", "", "", "", new ArrayList<>());
         Music result = musicRepository.save(newMusic);
 
         Assert.isTrue(newMusic.equals(result), "The element should not be altered after being saved");

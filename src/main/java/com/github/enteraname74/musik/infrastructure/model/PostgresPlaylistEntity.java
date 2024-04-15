@@ -4,6 +4,7 @@ import com.github.enteraname74.musik.domain.model.Playlist;
 import com.github.enteraname74.musik.domain.utils.IdGenerator;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class PostgresPlaylistEntity {
         return new Playlist(
                 this.id,
                 this.title,
-                this.musics.stream().map(PostgresMusicEntity::toMusic).toList()
+                new ArrayList<>(this.musics.stream().map(PostgresMusicEntity::toMusic).toList())
         );
     }
 

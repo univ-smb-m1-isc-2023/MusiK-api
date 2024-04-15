@@ -8,14 +8,16 @@ import com.github.enteraname74.musik.infrastructure.model.PostgresMusicEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -37,8 +39,8 @@ public class MusicDaoTests {
     public void init() {
         musicDao = new PostgresMusicDaoImpl(jpa, playlistJpa);
 
-        PostgresMusicEntity firstMusic = new PostgresMusicEntity("1", "", "", "", "", Collections.emptyList());
-        PostgresMusicEntity secondMusic = new PostgresMusicEntity("2", "", "", "", "", Collections.emptyList());
+        PostgresMusicEntity firstMusic = new PostgresMusicEntity("1", "", "", "", "", new ArrayList<>());
+        PostgresMusicEntity secondMusic = new PostgresMusicEntity("2", "", "", "", "", new ArrayList<>());
 
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
@@ -108,7 +110,7 @@ public class MusicDaoTests {
 
     @Test
     public void givenNewMusic_whenAddingMusic_thenMusicAddedInAllMusics() {
-        Music newMusic = new Music("3", "", "", "", "");
+        Music newMusic = new Music("3", "", "", "", "", new ArrayList<>());
         Music result = musicDao.upsert(newMusic);
 
         Assert.isTrue(newMusic.equals(result), "The element should not be altered after being saved");

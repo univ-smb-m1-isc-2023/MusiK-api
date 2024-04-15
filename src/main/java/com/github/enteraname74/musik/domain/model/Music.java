@@ -3,8 +3,7 @@ package com.github.enteraname74.musik.domain.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.enteraname74.musik.domain.utils.IdGenerator;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,9 +28,9 @@ public class Music {
     private String albumArtworkUrl;
 
     @JsonProperty("playlistIds")
-    private List<String> playlistIds;
+    private ArrayList<String> playlistIds;
 
-    public Music(String id, String name, String artist, String album, String albumArtworkUrl, List<String> playlistIds) {
+    public Music(String id, String name, String artist, String album, String albumArtworkUrl, ArrayList<String> playlistIds) {
         this.id = id;
         this.name = name;
         this.artist = artist;
@@ -50,7 +49,7 @@ public class Music {
                 "",
                 "",
                 "",
-                Collections.emptyList()
+                new ArrayList<>()
         );
     }
 
@@ -94,11 +93,11 @@ public class Music {
         this.albumArtworkUrl = albumArtworkUrl;
     }
 
-    public List<String> getPlaylistIds() {
+    public ArrayList<String> getPlaylistIds() {
         return playlistIds;
     }
 
-    public void setPlaylistIds(List<String> playlistIds) {
+    public void setPlaylistIds(ArrayList<String> playlistIds) {
         this.playlistIds = playlistIds;
     }
 
@@ -109,13 +108,13 @@ public class Music {
      * @return a Music.
      */
     public static Music emptyMusicInformation(String id) {
-        return new Music(id, "", "", "", "", Collections.emptyList());
+        return new Music(id, "", "", "", "", new ArrayList<>());
     }
 
     /**
      * Build a Music object with information from a MusicMetadata element.
      *
-     * @param id the id of the music file.
+     * @param id       the id of the music file.
      * @param metadata the metadata used for the music file.
      * @return a Music.
      */
@@ -126,7 +125,7 @@ public class Music {
                 metadata.getArtist(),
                 metadata.getAlbum(),
                 "",
-                Collections.emptyList()
+                new ArrayList<>()
         );
     }
 

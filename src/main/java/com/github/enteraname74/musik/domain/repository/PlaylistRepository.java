@@ -1,7 +1,6 @@
 package com.github.enteraname74.musik.domain.repository;
 
 import com.github.enteraname74.musik.domain.model.Playlist;
-import com.github.enteraname74.musik.domain.utils.ServiceResult;
 
 /**
  * Repository for managing Playlists.
@@ -25,5 +24,5 @@ public interface PlaylistRepository extends Repository<Playlist> {
      * @param musicId the id of the music to remove from the playlist.
      * @return true if the music was removed, false if not.
      */
-    boolean removeMusicToPlaylist(String playlistId, String musicId);
+    boolean removeMusicFromPlaylist(String playlistId, String musicId);
 }
