@@ -7,15 +7,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import java.util.Collection;
-import java.util.Collections;
-
 @Entity
 @Table(name = "AppUser")
 public class PostgresUserEntity {
     @Id
     @Column(name = "id", nullable = false)
-    private String id;
+    private String name;
 
     @Column(name = "hash", nullable = false)
     private byte[] hash;
@@ -26,8 +23,8 @@ public class PostgresUserEntity {
     @Column(name = "isAdmin", nullable = false)
     private boolean isAdmin;
 
-    public PostgresUserEntity(String id, byte[] hash, byte[] salt, boolean isAdmin) {
-        this.id = id;
+    public PostgresUserEntity(String name, byte[] hash, byte[] salt, boolean isAdmin) {
+        this.name = name;
         this.hash = hash;
         this.salt = salt;
         this.isAdmin = isAdmin;
@@ -42,12 +39,12 @@ public class PostgresUserEntity {
         );
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String id) {
+        this.name = id;
     }
 
     public byte[] getHash() {
@@ -98,7 +95,7 @@ public class PostgresUserEntity {
      */
     public User toUser() {
         return new User(
-                id,
+                name,
                 new HashedPassword(
                         hash,
                         salt

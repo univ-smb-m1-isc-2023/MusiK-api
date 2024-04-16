@@ -6,6 +6,7 @@ import com.github.enteraname74.musik.domain.utils.IdGenerator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represent a Playlist.
@@ -61,5 +62,18 @@ public class Playlist {
 
     public void setMusics(ArrayList<Music> musics) {
         this.musics = musics;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Playlist playlist = (Playlist) o;
+        return Objects.equals(id, playlist.id) && Objects.equals(title, playlist.title) && Objects.equals(musics, playlist.musics);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, musics);
     }
 }

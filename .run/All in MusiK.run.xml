@@ -1,0 +1,30 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="All in MusiK" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+    <module name="MusiK" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.github.enteraname74.musik.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.github.enteraname74.musik.controller.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.github.enteraname74.musik.domain.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.github.enteraname74.musik.infrastructure.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="" />
+    <option name="MAIN_CLASS_NAME" value="" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="package" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
