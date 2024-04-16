@@ -19,6 +19,12 @@ public class PlaylistController {
         this.playlistService = playlistService;
     }
 
+    /**
+     * Create a playlist.
+     *
+     * @param playlist the playlist to create.
+     * @return a ResponseEntity, with the response of the request.
+     */
     @PostMapping()
     public ResponseEntity<?> add(
             @RequestBody Playlist playlist
@@ -37,10 +43,10 @@ public class PlaylistController {
     List<Playlist> getAll() { return playlistService.getAll(); }
 
     /**
-     * Retrieves a Music from its id.
+     * Retrieves a Playlist from its id.
      *
-     * @param id the id of the Music to retrieve.
-     * @return a ResponseEntity, with the found Music or an error.
+     * @param id the id of the Playlist to retrieve.
+     * @return a ResponseEntity, with the found Playlist or an error.
      */
     @GetMapping("/{id}")
     ResponseEntity<?> get(

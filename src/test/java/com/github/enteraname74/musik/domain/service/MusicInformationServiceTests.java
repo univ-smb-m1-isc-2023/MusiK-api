@@ -1,4 +1,4 @@
-package com.github.enteraname74.musik.service;
+package com.github.enteraname74.musik.domain.service;
 
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;

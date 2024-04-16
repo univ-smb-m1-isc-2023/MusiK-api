@@ -1,6 +1,6 @@
 package com.github.enteraname74.musik.controller;
 
-import com.github.enteraname74.musik.controller.utils.ControllerMessages;
+import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.service.MusicInformationService;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
@@ -61,7 +61,7 @@ public class MusicControllerTests {
             } else {
                 return new ServiceResult<>(
                         HttpStatus.NOT_FOUND,
-                        ControllerMessages.WRONG_MUSIC_ID
+                        ServiceMessages.WRONG_MUSIC_ID
                 );
             }
         });
@@ -74,7 +74,7 @@ public class MusicControllerTests {
                 allMusics = new ArrayList<>(allMusics.stream().filter(music -> !music.getId().equals(id)).toList());
                 System.out.println("SIZE: " + allMusics.size());
             }
-            return new ServiceResult<>(HttpStatus.OK, ControllerMessages.MUSIC_DELETED);
+            return new ServiceResult<>(HttpStatus.OK, ServiceMessages.MUSIC_DELETED);
         }).when(musicInformationService).deleteById(any(String.class));
 
         Mockito.when(musicInformationService.save(any())).thenAnswer(i -> {
@@ -105,6 +105,6 @@ public class MusicControllerTests {
         mockMvc.perform(delete("/music/information/{id}", "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(ControllerMessages.MUSIC_DELETED)));
+                .andExpect(content().string(containsString(ServiceMessages.MUSIC_DELETED)));
     }
 }
