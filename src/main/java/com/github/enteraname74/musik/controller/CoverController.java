@@ -1,5 +1,7 @@
 package com.github.enteraname74.musik.controller;
 
+import com.github.enteraname74.musik.controller.utils.ControllerUtils;
+import com.github.enteraname74.musik.domain.service.AuthService;
 import com.github.enteraname74.musik.domain.service.CoverService;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,25 +10,27 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cover")
 public class CoverController {
 
     private final CoverService coverService;
+    private final AuthService authService;
 
     @Autowired
-    public CoverController(CoverService coverService) {
+    public CoverController(CoverService coverService, AuthService authService) {
         this.coverService = coverService;
+        this.authService = authService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable String id) {
-
+    public ResponseEntity<?> get(
+            @RequestHeader(name = HttpHeaders.AUTHORIZATION) String token,
+            @PathVariable String id
+    ) {
+        if (!authService.isUserAuthenticated(token)) return ControllerUtils.UNAUTHORIZED_RESPONSE;
         ServiceResult<?> result = coverService.getById(id);
 
         if (result.getHttpStatus().is2xxSuccessful()) {

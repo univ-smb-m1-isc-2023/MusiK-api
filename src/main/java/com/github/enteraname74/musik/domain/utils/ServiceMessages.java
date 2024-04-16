@@ -30,6 +30,7 @@ public class ServiceMessages {
     public static String USER_DELETED = "The user has been deleted.";
     public static String MISSING_PERMISSION = "The user is missing the permission to do the requested action.";
     public static String CANNOT_AUTHENTICATE_USER = "Cannot authenticate the user.";
+    public static String USER_NOT_AUTHENTICATED = "Cannot authenticate the user.";
 
 
     /********************* GENERAL ****************************/

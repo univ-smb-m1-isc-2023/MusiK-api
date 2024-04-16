@@ -63,7 +63,7 @@ public class PostgresTokenRepositoryImpl implements TokenRepository {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime tokenMaxDate = LocalDateTime.parse(foundToken.get().maxDate());
 
-        return tokenMaxDate.isBefore(now);
+        return now.isBefore(tokenMaxDate);
     }
 
     @Override

@@ -1,12 +1,14 @@
 package com.github.enteraname74.musik.controller;
 
-import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.model.Music;
+import com.github.enteraname74.musik.domain.service.AuthService;
 import com.github.enteraname74.musik.domain.service.MusicInformationService;
+import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class MusicControllerTests {
     @MockBean
     private MusicInformationService musicInformationService;
 
+    @MockBean
+    private AuthService authService;
+
     ArrayList<Music> allMusics;
 
     @BeforeEach
@@ -46,6 +51,8 @@ public class MusicControllerTests {
         Music secondMusic = new Music("2", "", "", "", "", new ArrayList<>());
 
         allMusics = new ArrayList<>(Arrays.asList(firstMusic, secondMusic));
+
+        Mockito.when(authService.isUserAuthenticated(any(String.class))).thenAnswer(i -> true);
 
         Mockito.when(musicInformationService.getById(firstMusic.getId())).thenAnswer(i -> {
             String id = (String) i.getArguments()[0];
@@ -86,7 +93,7 @@ public class MusicControllerTests {
 
     @Test
     public void givenMusics_whenGetById_thenRetrieveMusic() throws Exception {
-        mockMvc.perform(get("/music/information/{id}", "1"))
+        mockMvc.perform(get("/music/information/{id}", "1").header("Authorization", "AMOGUS"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("MUSICNAME"));
@@ -94,7 +101,7 @@ public class MusicControllerTests {
 
     @Test
     public void givenMusics_whenGetAll_thenShouldGetAllMusics() throws Exception {
-        mockMvc.perform(get("/music/information/all"))
+        mockMvc.perform(get("/music/information/all").header("Authorization", "AMOGUS"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
@@ -102,7 +109,7 @@ public class MusicControllerTests {
 
     @Test
     public void givenMusics_whenDeleteById_thenMusicShouldBeDeleted() throws Exception {
-        mockMvc.perform(delete("/music/information/{id}", "1"))
+        mockMvc.perform(delete("/music/information/{id}", "1").header("Authorization", "AMOGUS"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(ServiceMessages.MUSIC_DELETED)));

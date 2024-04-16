@@ -36,6 +36,7 @@ public class AuthServiceImpl implements AuthService {
     public ServiceResult<?> authenticateUser(String name, String password) {
         Optional<User> user = userRepository.getById(name);
 
+        // If we can't find the user, we stop here.
         if (user.isEmpty()) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
@@ -47,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
 
         boolean isPasswordCorrect = passwordVerification.isMatching(password, foundUser.getHashedPassword());
 
+        // If the password is incorrect, we also stop here.
         if (!isPasswordCorrect) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
@@ -54,7 +56,9 @@ public class AuthServiceImpl implements AuthService {
             );
         }
 
+        // Else, the authenticate step is complete, we return and save a token for the user to use.
         Token userToken = new Token();
+        tokenRepository.save(userToken);
 
         return new ServiceResult<>(
                 HttpStatus.OK,

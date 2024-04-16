@@ -1,26 +1,32 @@
 package com.github.enteraname74.musik.controller;
 
+import com.github.enteraname74.musik.controller.utils.ControllerUtils;
+import com.github.enteraname74.musik.domain.service.AuthService;
 import com.github.enteraname74.musik.domain.service.LyricsService;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/lyrics")
 public class LyricsController {
     private final LyricsService lyricsService;
+    private final AuthService authService;
 
     @Autowired
-    public LyricsController(LyricsService lyricsService) {
+    public LyricsController(LyricsService lyricsService, AuthService authService) {
         this.lyricsService = lyricsService;
+        this.authService = authService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable String id) {
+    public ResponseEntity<?> get(
+            @RequestHeader(name = HttpHeaders.AUTHORIZATION) String token,
+            @PathVariable String id
+    ) {
+        if (!authService.isUserAuthenticated(token)) return ControllerUtils.UNAUTHORIZED_RESPONSE;
         ServiceResult<?> result = lyricsService.getLyricsFromMusic(id);
 
         return new ResponseEntity<>(
