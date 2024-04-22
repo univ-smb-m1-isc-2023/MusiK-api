@@ -1,6 +1,6 @@
 package com.github.enteraname74.musik.domain.serviceimpl;
 
-import com.github.enteraname74.musik.controller.utils.ControllerMessages;
+import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.handler.MusicFilePersistenceManager;
 import com.github.enteraname74.musik.domain.handler.MusicInformationRetriever;
 import com.github.enteraname74.musik.domain.handler.RemoteMusicCoverRetriever;
@@ -48,7 +48,7 @@ public class MusicFileServiceImpl implements MusicFileService {
         if (!FileUtils.isMusicFile(file)) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
-                    ControllerMessages.FILE_IS_NOT_A_MUSIC
+                    ServiceMessages.FILE_IS_NOT_A_MUSIC
             );
         }
         // We first save the music file.
@@ -57,7 +57,7 @@ public class MusicFileServiceImpl implements MusicFileService {
         if (savedFilePotentialId.isEmpty()) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
-                    ControllerMessages.MUSIC_CANNOT_BE_SAVED
+                    ServiceMessages.MUSIC_CANNOT_BE_SAVED
             );
         }
 
@@ -69,7 +69,7 @@ public class MusicFileServiceImpl implements MusicFileService {
         if (musicFile.isEmpty()) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
-                    ControllerMessages.MUSIC_CANNOT_BE_SAVED
+                    ServiceMessages.MUSIC_CANNOT_BE_SAVED
             );
         }
         Music musicInformation = musicInformationRetriever.getInformationAboutMusicFile(
@@ -102,7 +102,7 @@ public class MusicFileServiceImpl implements MusicFileService {
         if (musicFile.isEmpty()) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_MUSIC_ID
+                    ServiceMessages.WRONG_MUSIC_ID
             );
         } else {
             System.out.println("GOT FILE: "+musicFile.get().length());

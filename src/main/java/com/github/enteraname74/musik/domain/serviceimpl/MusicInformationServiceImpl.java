@@ -1,6 +1,6 @@
 package com.github.enteraname74.musik.domain.serviceimpl;
 
-import com.github.enteraname74.musik.controller.utils.ControllerMessages;
+import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
 import com.github.enteraname74.musik.domain.repository.PlaylistRepository;
@@ -37,7 +37,7 @@ public class MusicInformationServiceImpl implements MusicInformationService {
         if (!musicRepository.doesElementExists(id)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_MUSIC_ID
+                    ServiceMessages.WRONG_MUSIC_ID
             );
         }
 
@@ -58,7 +58,7 @@ public class MusicInformationServiceImpl implements MusicInformationService {
         } catch (Exception exception) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
-                    ControllerMessages.MUSIC_CANNOT_BE_SAVED
+                    ServiceMessages.MUSIC_CANNOT_BE_SAVED
             );
         }
     }
@@ -68,7 +68,7 @@ public class MusicInformationServiceImpl implements MusicInformationService {
         if (!musicRepository.doesElementExists(id)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_MUSIC_ID
+                    ServiceMessages.WRONG_MUSIC_ID
             );
         }
 
@@ -81,7 +81,7 @@ public class MusicInformationServiceImpl implements MusicInformationService {
         musicRepository.deleteById(id);
         return new ServiceResult<>(
                 HttpStatus.OK,
-                ControllerMessages.MUSIC_DELETED
+                ServiceMessages.MUSIC_DELETED
         );
     }
 }
