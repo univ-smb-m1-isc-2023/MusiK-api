@@ -1,5 +1,7 @@
 package com.github.enteraname74.musik.controller;
 
+import com.github.enteraname74.musik.controller.utils.ControllerUtils;
+import com.github.enteraname74.musik.domain.service.AuthService;
 import com.github.enteraname74.musik.domain.service.MusicFileService;
 import com.github.enteraname74.musik.domain.utils.FileUtils;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
@@ -17,10 +19,12 @@ import java.io.File;
 @RequestMapping("/music/file")
 public class MusicFileController {
     private final MusicFileService musicFileService;
+    private final AuthService authService;
 
     @Autowired
-    public MusicFileController(MusicFileService musicFileService) {
+    public MusicFileController(MusicFileService musicFileService, AuthService authService) {
         this.musicFileService = musicFileService;
+        this.authService = authService;
     }
 
     /**
@@ -30,7 +34,11 @@ public class MusicFileController {
      * @return a ResponseEntity, with the result of the request.
      */
     @PostMapping("/upload")
-    public ResponseEntity<?> save(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> save(
+            @RequestHeader(name = HttpHeaders.AUTHORIZATION) String token,
+            @RequestParam("file") MultipartFile file
+    ) {
+        if (!authService.isUserAuthenticated(token)) return ControllerUtils.UNAUTHORIZED_RESPONSE;
         ServiceResult<?> result = musicFileService.save(file);
 
         return new ResponseEntity<>(
@@ -46,7 +54,11 @@ public class MusicFileController {
      * @return a ResponseEntity, with the found file or an error.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable String id) {
+    public ResponseEntity<?> get(
+            @RequestHeader(name = HttpHeaders.AUTHORIZATION) String token,
+            @PathVariable String id
+    ) {
+        if (!authService.isUserAuthenticated(token)) return ControllerUtils.UNAUTHORIZED_RESPONSE;
         ServiceResult<?> result = musicFileService.getById(id);
 
         if (result.getHttpStatus().is2xxSuccessful()) {

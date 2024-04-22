@@ -1,6 +1,6 @@
 package com.github.enteraname74.musik.domain.serviceimpl;
 
-import com.github.enteraname74.musik.controller.utils.ControllerMessages;
+import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
 import com.github.enteraname74.musik.domain.service.LyricsService;
@@ -37,7 +37,7 @@ public class LyricsServiceImpl implements LyricsService {
         if (optionalMusic.isEmpty()) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_MUSIC_ID
+                    ServiceMessages.WRONG_MUSIC_ID
             );
         }
 
@@ -60,7 +60,7 @@ public class LyricsServiceImpl implements LyricsService {
             System.out.println("ERROR: "+e);
             return new ServiceResult<>(
                     HttpStatus.SERVICE_UNAVAILABLE,
-                    ControllerMessages.SERVICE_UNREACHABLE
+                    ServiceMessages.SERVICE_UNREACHABLE
             );
         }
     }

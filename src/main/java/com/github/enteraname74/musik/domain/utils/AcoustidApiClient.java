@@ -18,7 +18,7 @@ public class AcoustidApiClient {
     public AcoustidApiClient(MusicMetadata initialMetadata) {
         this.initialMetadata = initialMetadata;
         this.httpClient = new AppHttpClient();
-        this.API_KEY = "";
+        this.API_KEY = "b'CHjabLfl";
     }
 
     /**

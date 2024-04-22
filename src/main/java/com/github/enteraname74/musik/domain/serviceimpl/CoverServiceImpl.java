@@ -1,6 +1,6 @@
 package com.github.enteraname74.musik.domain.serviceimpl;
 
-import com.github.enteraname74.musik.controller.utils.ControllerMessages;
+import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.handler.MusicCoverRetriever;
 import com.github.enteraname74.musik.domain.service.CoverService;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
@@ -30,7 +30,7 @@ public class CoverServiceImpl implements CoverService {
         if (coverData.isEmpty()) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
-                    ControllerMessages.CANNOT_FIND_COVER
+                    ServiceMessages.CANNOT_FIND_COVER
             );
         } else {
             return new ServiceResult<>(

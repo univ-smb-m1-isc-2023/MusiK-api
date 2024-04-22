@@ -1,10 +1,10 @@
 package com.github.enteraname74.musik.domain.serviceimpl;
 
-import com.github.enteraname74.musik.controller.utils.ControllerMessages;
 import com.github.enteraname74.musik.domain.model.Playlist;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
 import com.github.enteraname74.musik.domain.repository.PlaylistRepository;
 import com.github.enteraname74.musik.domain.service.PlaylistService;
+import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +37,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         if (!playlistRepository.doesElementExists(id)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_PLAYLIST_ID
+                    ServiceMessages.WRONG_PLAYLIST_ID
             );
         }
 
@@ -52,23 +52,24 @@ public class PlaylistServiceImpl implements PlaylistService {
         try {
             Playlist savedPlaylist = playlistRepository.save(playlist);
             return new ServiceResult<>(
-                    HttpStatus.ACCEPTED,
+                    HttpStatus.CREATED,
                     savedPlaylist
             );
         } catch (Exception exception) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
-                    ControllerMessages.PLAYLIST_CANNOT_BE_SAVED
+                    ServiceMessages.PLAYLIST_CANNOT_BE_SAVED
             );
         }
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Override
     public ServiceResult<?> deleteById(String id) {
         if (!playlistRepository.doesElementExists(id)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_PLAYLIST_ID
+                    ServiceMessages.WRONG_PLAYLIST_ID
             );
         }
 
@@ -79,7 +80,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlistRepository.deleteById(id);
         return new ServiceResult<>(
                 HttpStatus.OK,
-                ControllerMessages.PLAYLIST_DELETED
+                ServiceMessages.PLAYLIST_DELETED
         );
     }
 
@@ -88,25 +89,25 @@ public class PlaylistServiceImpl implements PlaylistService {
         if (!playlistRepository.doesElementExists(playlistId)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_PLAYLIST_ID
+                    ServiceMessages.WRONG_PLAYLIST_ID
             );
         }
         if (!musicRepository.doesElementExists(musicId)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_MUSIC_ID
+                    ServiceMessages.WRONG_MUSIC_ID
             );
         }
 
         if (!playlistRepository.addMusicToPlaylist(playlistId,musicId)) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
-                    ControllerMessages.MUSIC_ALREADY_IN_PLAYLIST
+                    ServiceMessages.MUSIC_ALREADY_IN_PLAYLIST
             );
         } else {
             return new ServiceResult<>(
                     HttpStatus.OK,
-                    ControllerMessages.MUSIC_ADDED_IN_PLAYLIST
+                    ServiceMessages.MUSIC_ADDED_IN_PLAYLIST
             );
         }
     }
@@ -116,25 +117,25 @@ public class PlaylistServiceImpl implements PlaylistService {
         if (!playlistRepository.doesElementExists(playlistId)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_PLAYLIST_ID
+                    ServiceMessages.WRONG_PLAYLIST_ID
             );
         }
         if (!musicRepository.doesElementExists(musicId)) {
             return new ServiceResult<>(
                     HttpStatus.NOT_FOUND,
-                    ControllerMessages.WRONG_MUSIC_ID
+                    ServiceMessages.WRONG_MUSIC_ID
             );
         }
 
         if (!playlistRepository.removeMusicFromPlaylist(playlistId,musicId)) {
             return new ServiceResult<>(
                     HttpStatus.BAD_REQUEST,
-                    ControllerMessages.MUSIC_NOT_FOUND_IN_PLAYLIST
+                    ServiceMessages.MUSIC_NOT_FOUND_IN_PLAYLIST
             );
         } else {
             return new ServiceResult<>(
                     HttpStatus.OK,
-                    ControllerMessages.MUSIC_REMOVED_FROM_PLAYLIST
+                    ServiceMessages.MUSIC_REMOVED_FROM_PLAYLIST
             );
         }
     }
