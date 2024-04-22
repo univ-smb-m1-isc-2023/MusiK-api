@@ -6,6 +6,7 @@ import com.github.enteraname74.musik.domain.model.acoustid.AcoustidLookupRequest
 import com.google.gson.Gson;
 
 import java.net.http.HttpResponse;
+import java.util.Optional;
 
 /**
  * Client for the Acoustid API.
@@ -18,7 +19,11 @@ public class AcoustidApiClient {
     public AcoustidApiClient(MusicMetadata initialMetadata) {
         this.initialMetadata = initialMetadata;
         this.httpClient = new AppHttpClient();
-        this.API_KEY = "b'CHjabLfl";
+
+        EnvironmentVariable environmentVariable = new EnvironmentVariable();
+        Optional<String> optionalValue = environmentVariable.getFromKey("ACOUSTID");
+
+        this.API_KEY = optionalValue.orElse("");
     }
 
     /**
