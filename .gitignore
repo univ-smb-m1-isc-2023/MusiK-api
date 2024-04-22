@@ -6,6 +6,7 @@ target/
 
 data
 musics
+auth
 .env
 
 ### STS ###
