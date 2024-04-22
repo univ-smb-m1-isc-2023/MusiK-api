@@ -40,4 +40,12 @@ public class ServiceMessages {
     /********************* COVERS *****************************/
 
     public static String CANNOT_FIND_COVER = "Cannot find the cover for the given id.";
+
+    /******************** ARTIST ****************************/
+
+    public static String CANNOT_FIND_ARTIST = "Cannot find the artist from the given entry.";
+
+    /******************** ALBUMS ****************************/
+
+    public static String CANNOT_FIND_ALBUM = "Cannot find the album from the given entry.";
 }
