@@ -1,5 +1,7 @@
 package com.github.enteraname74.musik.domain.model;
 
+import java.util.Objects;
+
 /**
  * Represent the metadata of a music file.
  */
@@ -79,5 +81,18 @@ public class MusicMetadata {
     @Override
     public String toString() {
         return "MusicMetadata(name = "+name+", artist = "+artist+", album = "+album+")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MusicMetadata that = (MusicMetadata) o;
+        return Objects.equals(name, that.name) && Objects.equals(artist, that.artist) && Objects.equals(album, that.album);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, artist, album);
     }
 }
