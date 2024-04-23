@@ -26,4 +26,12 @@ public interface MusicFilePersistenceManager {
      * @return the found file or nothing.
      */
     Optional<File> getById(String id);
+
+    /**
+     * Tries to delete a file from its id.
+     *
+     * @param id the id of the file to delete.
+     * @return true if the file has been deleted, false if not.
+     */
+    Boolean deleteFile(String id);
 }

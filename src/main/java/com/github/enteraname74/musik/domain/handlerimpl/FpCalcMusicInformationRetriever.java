@@ -29,10 +29,14 @@ public class FpCalcMusicInformationRetriever implements MusicInformationRetrieve
         // We need the initial metadata of the file.
         MusicMetadata initialMetadata = metadataManager.getMetadataOfFile(musicFile);
 
+
         Optional<FpCalcResult> result = getFingerPrintFromMusic(musicFile.getAbsolutePath());
         if (result.isEmpty()) return Music.ofMetadata(musicFileId, initialMetadata);
 
         FpCalcResult foundResult = result.get();
+
+        System.out.println("Initial metadata of the file: "+initialMetadata);
+
 
         AcoustidApiClient client = new AcoustidApiClient(initialMetadata);
 

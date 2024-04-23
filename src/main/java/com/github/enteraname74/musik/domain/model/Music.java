@@ -133,6 +133,16 @@ public class Music {
         );
     }
 
+    /**
+     * Check if the music has the same metadata as a given MusicMetadata.
+     *
+     * @param metadata the metadata to use for the comparison
+     * @return true if the music has the same metadata as the one given in the arguments.
+     */
+    public Boolean hasSameMetadata(MusicMetadata metadata) {
+        return artist.equals(metadata.getArtist()) && album.equals(metadata.getAlbum()) && name.equals(metadata.getName());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
