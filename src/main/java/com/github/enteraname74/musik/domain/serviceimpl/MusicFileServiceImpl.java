@@ -5,6 +5,7 @@ import com.github.enteraname74.musik.domain.handler.MusicFilePersistenceManager;
 import com.github.enteraname74.musik.domain.handler.MusicInformationRetriever;
 import com.github.enteraname74.musik.domain.handler.RemoteMusicCoverRetriever;
 import com.github.enteraname74.musik.domain.model.Music;
+import com.github.enteraname74.musik.domain.model.MusicMetadata;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
 import com.github.enteraname74.musik.domain.service.MusicFileService;
 import com.github.enteraname74.musik.domain.utils.FileUtils;
@@ -88,6 +89,12 @@ public class MusicFileServiceImpl implements MusicFileService {
         musicInformation.setAlbumArtworkUrl(urlToSave);
 
         System.out.println("Url of the cover art: "+musicInformation.getAlbumArtworkUrl());
+
+        // If the music already exists, we do nothing.
+        if (musicRepository.doesMusicExistWithMetadata(MusicMetadata.ofMusic(musicInformation))) {
+            musicFilePersistenceManager.deleteFile(musicInformation.getId());
+            return new ServiceResult<>(HttpStatus.CONFLICT, ServiceMessages.MUSIC_ALREADY_SAVED);
+        }
 
         // Finally, we save the music information.
         musicRepository.save(musicInformation);

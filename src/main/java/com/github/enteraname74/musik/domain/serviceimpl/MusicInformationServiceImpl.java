@@ -1,10 +1,11 @@
 package com.github.enteraname74.musik.domain.serviceimpl;
 
-import com.github.enteraname74.musik.domain.utils.ServiceMessages;
+import com.github.enteraname74.musik.domain.handler.MusicFilePersistenceManager;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
 import com.github.enteraname74.musik.domain.repository.PlaylistRepository;
 import com.github.enteraname74.musik.domain.service.MusicInformationService;
+import com.github.enteraname74.musik.domain.utils.ServiceMessages;
 import com.github.enteraname74.musik.domain.utils.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,17 @@ public class MusicInformationServiceImpl implements MusicInformationService {
     private final MusicRepository musicRepository;
     private final PlaylistRepository playlistRepository;
 
+    private final MusicFilePersistenceManager musicFilePersistenceManager;
+
     @Autowired
-    public MusicInformationServiceImpl(MusicRepository musicRepository, PlaylistRepository playlistRepository) {
+    public MusicInformationServiceImpl(
+            MusicRepository musicRepository,
+            PlaylistRepository playlistRepository,
+            MusicFilePersistenceManager musicFilePersistenceManager
+    ) {
         this.musicRepository = musicRepository;
         this.playlistRepository = playlistRepository;
+        this.musicFilePersistenceManager = musicFilePersistenceManager;
     }
 
     @Override
@@ -77,8 +85,8 @@ public class MusicInformationServiceImpl implements MusicInformationService {
 
         musicToDelete.getPlaylistIds().forEach(playlistId -> playlistRepository.removeMusicFromPlaylist(playlistId, id));
 
-
         musicRepository.deleteById(id);
+        musicFilePersistenceManager.deleteFile(id);
         return new ServiceResult<>(
                 HttpStatus.OK,
                 ServiceMessages.MUSIC_DELETED

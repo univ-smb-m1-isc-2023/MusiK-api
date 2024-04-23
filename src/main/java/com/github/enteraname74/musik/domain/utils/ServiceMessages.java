@@ -8,6 +8,7 @@ public class ServiceMessages {
     public static String WRONG_MUSIC_ID = "The given id is not bound to a music.";
     public static String MUSIC_CANNOT_BE_SAVED = "The given music cannot be saved.";
     public static String MUSIC_DELETED = "The music has been deleted.";
+    public static String MUSIC_ALREADY_SAVED = "The given music is already saved.";
     public static String FILE_IS_NOT_A_MUSIC = "The given file is not a music file.";
 
     /*********************** PLAYLISTS MESSAGES *******************/

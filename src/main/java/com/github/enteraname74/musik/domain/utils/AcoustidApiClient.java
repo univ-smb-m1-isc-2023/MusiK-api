@@ -29,17 +29,18 @@ public class AcoustidApiClient {
     /**
      * Retrieve music information from the Acoustid API.
      *
-     * @param fingerprint the fingerprint used by the Acoustid API to found music information.
-     * @param musicDuration the duration of the music.
-     * @return music information about the fingerprint. It can return an empty Music element (beside its id) if no
-     * information was found.
+     * @param fingerprint     the fingerprint used by the Acoustid API to found music information.
+     * @param musicDuration   the duration of the music.
+     * @param initialMetadata the initial metadata of the file to return if nothing was found.
+     * @return music information about the fingerprint. Returns the initial metadata if nothing was found.
      */
     public Music getMusicInformation(
             String fingerprint,
             String musicDuration,
-            String musicFileId
+            String musicFileId,
+            MusicMetadata initialMetadata
     ) {
-        String uri = "https://api.acoustid.org/v2/lookup?client="+API_KEY+"&meta=recordings+releasegroups+compress&duration="+musicDuration+"&fingerprint="+fingerprint;
+        String uri = "https://api.acoustid.org/v2/lookup?client=" + API_KEY + "&meta=recordings+releasegroups+compress&duration=" + musicDuration + "&fingerprint=" + fingerprint;
 
         System.out.println("WILL USE THE FOLLOWING URL");
         System.out.println(uri);
@@ -51,17 +52,19 @@ public class AcoustidApiClient {
 
             AcoustidResultAnalyzer resultAnalyzer = new AcoustidResultAnalyzer(requestResult, initialMetadata);
             MusicMetadata foundInformation = resultAnalyzer.getMusicMetadataFromRequest();
-            System.out.println("GOT INFO:");
-            System.out.println(foundInformation.getName());
-            System.out.println(foundInformation.getAlbum());
-            System.out.println(foundInformation.getArtist());
+            System.out.println("Got metadata: " + foundInformation);
+
+            if (foundInformation.isEmpty()) {
+                return Music.ofMetadata(musicFileId, initialMetadata);
+            }
 
             return Music.ofMetadata(musicFileId, foundInformation);
+
         } catch (Exception e) {
             System.out.println("CANNOT RETRIEVE RESPONSE");
             System.out.println(e.getLocalizedMessage());
         }
 
-        return Music.emptyMusicInformation(musicFileId);
+        return Music.ofMetadata(musicFileId, initialMetadata);
     }
 }

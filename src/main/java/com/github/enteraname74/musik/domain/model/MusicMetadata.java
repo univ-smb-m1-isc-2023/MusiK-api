@@ -45,11 +45,39 @@ public class MusicMetadata {
     }
 
     /**
+     * Check if the metadata are empty.
+     *
+     * @return true if the metadata are empty, false if not.
+     */
+    public Boolean isEmpty() {
+        return name.isBlank() && artist.isBlank() && album.isBlank();
+    }
+
+    /**
      * Specify an empty music metadata element.
      *
      * @return an empty MusicMetadata.
      */
     public static MusicMetadata emptyMusicMetadata() {
         return new MusicMetadata();
+    }
+
+    /**
+     * Build a MusicMetadata from a given music.
+     *
+     * @param music the music to build metadata from.
+     * @return a MusicMetadata based on the given music.
+     */
+    public static MusicMetadata ofMusic(Music music) {
+        return new MusicMetadata(
+                music.getName(),
+                music.getArtist(),
+                music.getAlbum()
+        );
+    }
+
+    @Override
+    public String toString() {
+        return "MusicMetadata(name = "+name+", artist = "+artist+", album = "+album+")";
     }
 }

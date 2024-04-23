@@ -53,10 +53,15 @@ public class MusicFilePersistenceManagerImpl implements MusicFilePersistenceMana
 
     @Override
     public Optional<String> saveFile(MultipartFile file) {
+        System.out.println("Is file empty ? "+ file.isEmpty());
         if (file.isEmpty()) return Optional.empty();
 
         String originalFileName = file.getOriginalFilename();
+        System.out.println("File name: "+originalFileName);
         Optional<String> fileExtension = FileUtils.getFileExtension(originalFileName);
+
+        System.out.println("Is file extension empty ?" + fileExtension.isEmpty());
+        System.out.println("Is noy music file ?" + !FileUtils.isMusicFile(file));
 
         if (fileExtension.isEmpty() || !FileUtils.isMusicFile(file)) return Optional.empty();
         String fileId = IdGenerator.generateRandomId();
@@ -70,6 +75,7 @@ public class MusicFilePersistenceManagerImpl implements MusicFilePersistenceMana
 
             return Optional.of(fileId);
         } catch (Exception e) {
+            System.out.println("EXCEPTION WILL WRITING UPLOADED FILE: "+e.getLocalizedMessage());
             return Optional.empty();
         }
     }
@@ -87,5 +93,12 @@ public class MusicFilePersistenceManagerImpl implements MusicFilePersistenceMana
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public Boolean deleteFile(String id) {
+        Optional<File> fileToDelete = getById(id);
+
+        return fileToDelete.map(File::delete).orElse(false);
     }
 }
