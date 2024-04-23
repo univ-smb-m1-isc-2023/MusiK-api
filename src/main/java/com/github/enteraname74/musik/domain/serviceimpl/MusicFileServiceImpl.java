@@ -91,7 +91,8 @@ public class MusicFileServiceImpl implements MusicFileService {
         System.out.println("Url of the cover art: "+musicInformation.getAlbumArtworkUrl());
 
         // If the music already exists, we do nothing.
-        if (!musicRepository.doesMusicExistWithMetadata(MusicMetadata.ofMusic(musicInformation))) {
+        if (musicRepository.doesMusicExistWithMetadata(MusicMetadata.ofMusic(musicInformation))) {
+            musicFilePersistenceManager.deleteFile(musicInformation.getId());
             return new ServiceResult<>(HttpStatus.CONFLICT, ServiceMessages.MUSIC_ALREADY_SAVED);
         }
 
