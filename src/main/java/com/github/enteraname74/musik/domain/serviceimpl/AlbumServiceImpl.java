@@ -1,6 +1,7 @@
 package com.github.enteraname74.musik.domain.serviceimpl;
 
 import com.github.enteraname74.musik.domain.model.Album;
+import com.github.enteraname74.musik.domain.model.AlbumPreview;
 import com.github.enteraname74.musik.domain.model.ArtistAlbum;
 import com.github.enteraname74.musik.domain.model.Music;
 import com.github.enteraname74.musik.domain.repository.MusicRepository;
@@ -60,5 +61,18 @@ public class AlbumServiceImpl implements AlbumService {
                     optionalAlbum.get()
             );
         }
+    }
+
+    @Override
+    public List<AlbumPreview> getAll() {
+        List<Music> allMusics = musicRepository.getAll();
+        Map<ArtistAlbum, List<Music>> albums = allMusics.stream().collect(Collectors.groupingBy(music -> new ArtistAlbum(music.getArtist(), music.getAlbum())));
+
+        return albums.entrySet().stream().map(albumInfo -> new AlbumPreview(
+                albumInfo.getKey().album(),
+                albumInfo.getKey().artist(),
+                albumInfo.getValue().size(),
+                albumInfo.getValue().get(0).getAlbumArtworkUrl()
+        )).toList();
     }
 }
