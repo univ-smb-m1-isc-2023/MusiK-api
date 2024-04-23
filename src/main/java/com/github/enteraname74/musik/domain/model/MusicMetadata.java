@@ -45,6 +45,15 @@ public class MusicMetadata {
     }
 
     /**
+     * Check if the metadata is empty.
+     *
+     * @return true if the metadata is empty, false if not.
+     */
+    public Boolean isEmpty() {
+        return this.album.isBlank() && this.artist.isBlank() && this.name.isBlank();
+    }
+
+    /**
      * Specify an empty music metadata element.
      *
      * @return an empty MusicMetadata.

@@ -77,7 +77,6 @@ public class MusicInformationServiceImpl implements MusicInformationService {
 
         musicToDelete.getPlaylistIds().forEach(playlistId -> playlistRepository.removeMusicFromPlaylist(playlistId, id));
 
-
         musicRepository.deleteById(id);
         return new ServiceResult<>(
                 HttpStatus.OK,

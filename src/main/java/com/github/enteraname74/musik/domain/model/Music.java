@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.enteraname74.musik.domain.utils.IdGenerator;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -102,13 +101,13 @@ public class Music {
     }
 
     /**
-     * Build a Music object without information. It only holds the id of the music file.
+     * Build a Music object with unknown information. It only holds the id of the music file.
      *
      * @param id the id of the music file.
      * @return a Music.
      */
-    public static Music emptyMusicInformation(String id) {
-        return new Music(id, "", "", "", "", new ArrayList<>());
+    public static Music unknownMusicInformation(String id) {
+        return new Music(id, "Unknown", "Unknown", "Unknown", "", new ArrayList<>());
     }
 
     /**
@@ -119,6 +118,11 @@ public class Music {
      * @return a Music.
      */
     public static Music ofMetadata(String id, MusicMetadata metadata) {
+
+        if (metadata.isEmpty()) {
+            return Music.unknownMusicInformation(id);
+        }
+
         return new Music(
                 id,
                 metadata.getName(),

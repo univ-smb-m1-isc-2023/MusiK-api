@@ -77,6 +77,8 @@ public class MusicFileServiceImpl implements MusicFileService {
                 savedFileId
         );
 
+        // We check if there is
+
         Optional<String> remoteCoverUrl = remoteMusicCoverRetriever.getCoverURL(
                 musicInformation.getName(),
                 musicInformation.getArtist()
