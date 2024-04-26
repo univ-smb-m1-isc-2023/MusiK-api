@@ -1,6 +1,7 @@
 package com.github.enteraname74.musik.domain.model;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represent an Album.
@@ -16,4 +17,16 @@ public record Album(
         List<Music> musics,
         String artworkUrl
 ) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Album album = (Album) o;
+        return Objects.equals(name, album.name) && Objects.equals(artist, album.artist) && Objects.equals(musics, album.musics) && Objects.equals(artworkUrl, album.artworkUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, artist, musics, artworkUrl);
+    }
 }
